@@ -41,7 +41,7 @@
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
             </Label>
-            <GridPane layoutX="42.0" layoutY="63.0" prefHeight="286.0" prefWidth="336.0">
+            <GridPane layoutX="19.0" layoutY="63.0" prefHeight="273.0" prefWidth="366.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.33331298828125" minWidth="10.0" prefWidth="122.33331298828125" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.66668701171875" minWidth="10.0" prefWidth="191.66668701171875" />
@@ -49,6 +49,7 @@
               <rowConstraints>
                 <RowConstraints maxHeight="81.66669464111328" minHeight="10.0" prefHeight="43.66667938232422" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="130.33332061767578" minHeight="10.0" prefHeight="54.666664123535156" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="130.33332061767578" minHeight="10.0" prefHeight="54.666664123535156" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="130.33332061767578" minHeight="10.0" prefHeight="54.666664123535156" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="132.0" minHeight="10.0" prefHeight="38.666656494140625" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="132.0" minHeight="10.0" prefHeight="44.66667683919272" vgrow="SOMETIMES" />
@@ -58,15 +59,17 @@
                   <Label text="First Name" />
                   <TextField fx:id="lName_lineEdit" promptText="Enter your last name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label layoutX="10.0" layoutY="39.0" prefHeight="17.0" prefWidth="59.0" text="Last Name" GridPane.rowIndex="1" />
-                  <Label layoutX="10.0" layoutY="126.0" prefHeight="17.0" prefWidth="59.0" text="Gender" GridPane.rowIndex="4" />
+                  <Label layoutX="10.0" layoutY="126.0" prefHeight="17.0" prefWidth="59.0" text="Gender" GridPane.rowIndex="5" />
                   <TextField fx:id="FName_lineEdit" layoutX="167.0" layoutY="20.0" promptText="Enter your first name" GridPane.columnIndex="1" />
-                  <ComboBox fx:id="gender_comboBox" prefWidth="150.0" promptText="Select gender" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label layoutX="10.0" layoutY="52.0" prefHeight="17.0" prefWidth="59.0" text="Email" GridPane.rowIndex="2" />
-                  <TextField fx:id="email_lineEdit" layoutX="132.0" layoutY="48.0" promptText="Enter your Email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label layoutX="10.0" layoutY="17.0" text="Phone number" GridPane.rowIndex="5" />
-                  <TextField fx:id="telNo_lineEdit" layoutX="132.0" layoutY="13.0" promptText="Enter your Phone number" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label layoutX="10.0" layoutY="24.0" text="Password" GridPane.rowIndex="3" />
-                  <TextField fx:id="pass_lineEdit" layoutX="154.0" layoutY="126.0" promptText="Enter your Password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="gender_comboBox" prefWidth="150.0" promptText="Select gender" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label layoutX="10.0" layoutY="52.0" prefHeight="17.0" prefWidth="59.0" text="Email" GridPane.rowIndex="3" />
+                  <TextField fx:id="email_lineEdit" layoutX="132.0" layoutY="48.0" promptText="Enter your Email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label layoutX="10.0" layoutY="17.0" text="Phone number" GridPane.rowIndex="6" />
+                  <TextField fx:id="telNo_lineEdit" layoutX="132.0" layoutY="13.0" promptText="Enter your Phone number" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label layoutX="10.0" layoutY="24.0" text="Password" GridPane.rowIndex="4" />
+                  <TextField fx:id="pass_lineEdit" layoutX="154.0" layoutY="126.0" promptText="Enter your Password" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label layoutX="10.0" layoutY="68.0" prefHeight="17.0" prefWidth="59.0" text="Age" GridPane.rowIndex="2" />
+                  <TextField fx:id="age_lineEdit" layoutX="163.0" layoutY="54.0" promptText="Enter your age" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <Button fx:id="create_button" layoutX="158.0" layoutY="361.0" mnemonicParsing="false" style="-fx-background-color: B3D9FF;" text="Create" />

@@ -12,12 +12,12 @@ import javafx.scene.Node;
 
 public class Utils extends Application{
 
-    public void ChangeScene(ActionEvent event, String title, String fxmlFile, String email){
+    public static void ChangeScene(ActionEvent event, String title, String fxmlFile, String email){
         Parent root = null;
 
         if(email != null){
             try{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+                FXMLLoader loader = new FXMLLoader(Utils.class.getResource(fxmlFile));
                 root = loader.load();
                 //LoggedInController loggedIn = loader.getController();
 
@@ -26,7 +26,7 @@ public class Utils extends Application{
             }
         }else{
             try{
-                root = FXMLLoader.load(getClass().getResource(fxmlFile));
+                root = FXMLLoader.load(Utils.class.getResource(fxmlFile));
             }catch(IOException e){
                 e.printStackTrace();
             }
