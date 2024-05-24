@@ -19,60 +19,51 @@ import java.net.URL;
 public class LoggedInController implements Initializable {
 
     @FXML
-    private ImageView exit;
+    private Label menuBack_button;
 
     @FXML
-    private ImageView menu;
+    private Label menu_button;
 
     @FXML
-    private AnchorPane pane1;
-
-    @FXML
-    private AnchorPane pane2;
+    private AnchorPane slider;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources){
 
+        slider.setTranslateX(-176);
 
-        pane1.setVisible(false);
+        menu_button.setOnMouseClicked(event -> {
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(slider);
 
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), pane1);
-        fadeTransition.setFromValue(1);
-        fadeTransition.setToValue(0);
-        fadeTransition.play();
+            slide.setToX(0);
+            slide.play();
 
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), pane2);
-        translateTransition.setByX(-600);
-        translateTransition.play();
+            slider.setTranslateX(-176);
 
-        menu.setOnMouseClicked(event ->{
-            pane1.setVisible(true);
-
-            FadeTransition fadeTransition1 = new FadeTransition(Duration.seconds(0.5), pane1);
-            fadeTransition1.setFromValue(0);
-            fadeTransition1.setToValue(0.15);
-            fadeTransition1.play();
-    
-            TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5), pane2);
-            translateTransition1.setByX(+600);
-            translateTransition1.play();            
-        });
-
-        pane1.setOnMouseClicked(event ->{
-            FadeTransition fadeTransition1 = new FadeTransition(Duration.seconds(0.5), pane1);
-            fadeTransition1.setFromValue(0.15);
-            fadeTransition1.setToValue(0);
-            fadeTransition1.play();
-
-            fadeTransition1.setOnFinished(event1 ->{
-                pane1.setVisible(false);
+            slide.setOnFinished((ActionEvent e)->{
+                menuBack_button.setVisible(true);
+                menu_button.setVisible(false);
             });
-    
-            TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5), pane2);
-            translateTransition1.setByX(-600);
-            translateTransition1.play();  
         });
 
+
+        menuBack_button.setOnMouseClicked(event -> {
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(slider);
+
+            slide.setToX(-176);
+            slide.play();
+
+            slider.setTranslateX(0);
+
+            slide.setOnFinished((ActionEvent e)->{
+                menuBack_button.setVisible(false);
+                menu_button.setVisible(true);
+            });
+        });        
     }
 
 }
