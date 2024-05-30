@@ -11,17 +11,25 @@ create table Customer(
     account_no int primary key
 );
 
+alter table Customer
+add account_type VARCHAR(10);
 
-create table Transactions(
+
+create table AccountBalance(
     account_no int references customer(account_no),
     balance float,
 );
 
-create table AccountHistory(
-    transaction_id int IDENTITY(1,1) primary key,
-    account_no int REFERENCES Customer(account_no),
-    value float,
-    date DATETIME DEFAULT getdate()
+
+
+CREATE TABLE Transactions (
+    transaction_id INT IDENTITY(1,1) PRIMARY KEY,
+    sender_account_no INT,
+    receiver_account_no INT,
+    amount FLOAT,
+    transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FK_sender_account_no FOREIGN KEY (sender_account_no) REFERENCES Customer(account_no),
+    CONSTRAINT FK_receiver_account_no FOREIGN KEY (receiver_account_no) REFERENCES Customer(account_no)
 );
 
 
