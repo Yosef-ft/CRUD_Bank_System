@@ -19,13 +19,31 @@ import java.net.URL;
 public class LoggedInController implements Initializable {
 
     @FXML
+    private Button accType_button;
+
+    @FXML
+    private Button home_button;
+
+    @FXML
+    private Button live_button;
+
+    @FXML
+    private Button logout_button;
+
+    @FXML
     private Label menuBack_button;
 
     @FXML
     private Label menu_button;
 
     @FXML
+    private Button recent_button;
+
+    @FXML
     private AnchorPane slider;
+
+    @FXML
+    private Button user_button;
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
@@ -63,7 +81,16 @@ public class LoggedInController implements Initializable {
                 menuBack_button.setVisible(false);
                 menu_button.setVisible(true);
             });
-        });        
+        });    
+        
+        live_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                String checkout_url = ChapaConnection.payment("Yosef@gmail.com", "yosef", "fetene", "100").getAsJsonObject("detail").getAsJsonObject("data").get("checkout_url").getAsString();
+                ChapaConnection.checkout_url = checkout_url;
+                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", null);
+            }
+        });
     }
 
 }
