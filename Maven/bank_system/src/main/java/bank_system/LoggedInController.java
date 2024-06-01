@@ -45,6 +45,9 @@ public class LoggedInController implements Initializable {
     @FXML
     private Button user_button;
 
+    @FXML
+    private AnchorPane home_pane;
+
     @Override
     public void initialize(URL location, ResourceBundle resources){
 
@@ -57,6 +60,7 @@ public class LoggedInController implements Initializable {
 
             slide.setToX(0);
             slide.play();
+            home_pane.setVisible(false);
 
             slider.setTranslateX(-176);
 
@@ -80,6 +84,7 @@ public class LoggedInController implements Initializable {
             slide.setOnFinished((ActionEvent e)->{
                 menuBack_button.setVisible(false);
                 menu_button.setVisible(true);
+                home_pane.setVisible(true);
             });
         });    
         
