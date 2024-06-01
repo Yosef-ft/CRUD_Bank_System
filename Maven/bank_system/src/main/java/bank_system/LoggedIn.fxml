@@ -187,6 +187,127 @@
                </children>
             </AnchorPane>
          </left>
+         <center>
+            <AnchorPane prefHeight="319.0" prefWidth="603.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane fx:id="home_pane2" layoutX="-3.0" layoutY="-1.0" prefHeight="335.0" prefWidth="428.0">
+                     <children>
+                        <Button layoutX="52.0" layoutY="14.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Withdraw">
+                           <styleClass>
+                              <String fx:value="sidebarItem" />
+                              <String fx:value="colorbar" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Resources/icons8-withdraw-64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="52.0" layoutY="112.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Utilities">
+                           <styleClass>
+                              <String fx:value="sidebarItem" />
+                              <String fx:value="colorbar" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Resources/icons8-utilities-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="52.0" layoutY="204.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Top up">
+                           <styleClass>
+                              <String fx:value="sidebarItem" />
+                              <String fx:value="colorbar" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Resources/icons8-topup-payment-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="260.0" layoutY="14.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Exchange Rate">
+                           <graphic>
+                              <ImageView fitHeight="45.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Resources/icons8-dollar-won-exchange-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <styleClass>
+                              <String fx:value="colorbar" />
+                              <String fx:value="sidebarItem" />
+                           </styleClass>
+                        </Button>
+                        <Button layoutX="260.0" layoutY="112.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Travel">
+                           <styleClass>
+                              <String fx:value="sidebarItem" />
+                              <String fx:value="colorbar" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Resources/icons8-aircraft-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </center>
       </BorderPane>
+      <AnchorPane fx:id="home_pane" layoutX="-1.0" layoutY="66.0" prefHeight="336.0" prefWidth="183.0">
+         <children>
+            <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Deposit">
+               <styleClass>
+                  <String fx:value="sidebarItem" />
+                  <String fx:value="colorbar" />
+                  <String fx:value="button" />
+               </styleClass>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Resources/icons8-deposit-50.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="19.0" layoutY="111.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Check Balance">
+               <styleClass>
+                  <String fx:value="sidebarItem" />
+                  <String fx:value="colorbar" />
+                  <String fx:value="button" />
+               </styleClass>
+               <graphic>
+                  <ImageView fitHeight="39.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Resources/icons8-balance-50.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="19.0" layoutY="205.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Transfer">
+               <styleClass>
+                  <String fx:value="sidebarItem" />
+                  <String fx:value="colorbar" />
+                  <String fx:value="button" />
+               </styleClass>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Resources/icons8-transfer-money-48.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
