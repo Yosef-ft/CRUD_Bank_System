@@ -11,16 +11,16 @@ import javafx.scene.control.Alert;
 
 public class customer {
 
+    static String connectionUrl =
+    "jdbc:sqlserver://DESKTOP-1G41PS0\\SQLEXPRESS;"
+                    + "database=Bank;"
+                    + "integratedSecurity=true;"
+                    + "encrypt=true;"
+                    + "trustServerCertificate=true;"
+                    + "loginTimeout=30;";
+
 
     public static void SignIn(ActionEvent event, String fName, String lName,String age, String email, String password, String gender, String tellNo){
-
-        String connectionUrl =
-        "jdbc:sqlserver://DESKTOP-1G41PS0\\SQLEXPRESS;"
-                        + "database=Bank;"
-                        + "integratedSecurity=true;"
-                        + "encrypt=true;"
-                        + "trustServerCertificate=true;"
-                        + "loginTimeout=30;";
 
         PreparedStatement pCheckUser = null;
         PreparedStatement pInsert = null;
@@ -91,14 +91,6 @@ public class customer {
     }
 
     public static void LogIn(ActionEvent event, String email, String password){
-
-        String connectionUrl =
-        "jdbc:sqlserver://DESKTOP-1G41PS0\\SQLEXPRESS;"
-                        + "database=Bank;"
-                        + "integratedSecurity=true;"
-                        + "encrypt=true;"
-                        + "trustServerCertificate=true;"
-                        + "loginTimeout=30;";
         
         PreparedStatement pCheckPass = null;
         ResultSet resultSet = null;
@@ -143,5 +135,36 @@ public class customer {
                 }
             }
         }
+    }
+
+    public static String Account_no_retriver(String email){
+
+        PreparedStatement pStatement;
+        ResultSet resultSet;
+        
+        String Account_no = null; // change the account number to string; makes it easier for transaction class
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl)){
+            pStatement = connection.prepareStatement("Select account_no from customer where email = ?");
+            pStatement.setString(1, email);
+            resultSet = pStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Envalid Email address please try again");
+                alert.show();
+            }else{
+                int account_no; 
+                while(resultSet.next()){
+                    account_no = resultSet.getInt("account_no");
+                    Account_no = String.valueOf(account_no);
+                }
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return Account_no;
     }
 }

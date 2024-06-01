@@ -11,9 +11,11 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 
 public class Utils extends Application{
+    public static String Email;
 
     public static void ChangeScene(ActionEvent event, String title, String fxmlFile, String email){
         Parent root = null;
+        Email = email;
 
         if(email != null){
             try{

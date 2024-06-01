@@ -21,7 +21,7 @@
                   <Pane layoutX="100.0" layoutY="20.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: B3D9FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <HBox layoutX="176.0" layoutY="-17.0" prefHeight="40.0" prefWidth="424.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="176.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
                      <children>
-                        <Button fx:id="home_button" mnemonicParsing="false" prefHeight="38.0" prefWidth="136.0" style="-fx-background-color: White;" styleClass="menuItem" text="Home">
+                        <Button fx:id="home_button2" mnemonicParsing="false" prefHeight="38.0" prefWidth="136.0" style="-fx-background-color: White;" styleClass="menuItem" text="Home">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -30,7 +30,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="live_button" mnemonicParsing="false" prefHeight="38.0" prefWidth="136.0" style="-fx-background-color: White;" styleClass="menuItem" text="Live Tranaciton">
+                        <Button fx:id="live_button2" mnemonicParsing="false" prefHeight="38.0" prefWidth="136.0" style="-fx-background-color: White;" styleClass="menuItem" text="Live Tranaciton">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -86,7 +86,7 @@
                <children>
                   <VBox layoutX="38.0" layoutY="39.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: B3D9FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0">
                      <children>
-                        <Button fx:id="home_button2" alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="38.0" prefWidth="575.0" text="Home">
+                        <Button fx:id="home_button" alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="38.0" prefWidth="575.0" text="Home">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -192,7 +192,7 @@
                <children>
                   <AnchorPane fx:id="home_pane2" layoutX="-3.0" layoutY="-1.0" prefHeight="335.0" prefWidth="428.0">
                      <children>
-                        <Button layoutX="52.0" layoutY="14.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Withdraw">
+                        <Button fx:id="withdraw_button" layoutX="52.0" layoutY="14.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Withdraw">
                            <styleClass>
                               <String fx:value="sidebarItem" />
                               <String fx:value="colorbar" />
@@ -205,7 +205,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button layoutX="52.0" layoutY="112.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Utilities">
+                        <Button fx:id="utilities_button" layoutX="52.0" layoutY="112.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Utilities">
                            <styleClass>
                               <String fx:value="sidebarItem" />
                               <String fx:value="colorbar" />
@@ -218,7 +218,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button layoutX="52.0" layoutY="204.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Top up">
+                        <Button fx:id="topUp_button" layoutX="52.0" layoutY="204.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Top up">
                            <styleClass>
                               <String fx:value="sidebarItem" />
                               <String fx:value="colorbar" />
@@ -231,7 +231,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button layoutX="260.0" layoutY="14.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Exchange Rate">
+                        <Button fx:id="exchange_button" layoutX="260.0" layoutY="14.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Exchange Rate">
                            <graphic>
                               <ImageView fitHeight="45.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -250,7 +250,7 @@
                               <String fx:value="colorbar" />
                            </styleClass>
                            <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="travel_button" fitHeight="40.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Resources/icons8-aircraft-50.png" />
                                  </image>
@@ -265,7 +265,7 @@
       </BorderPane>
       <AnchorPane fx:id="home_pane" layoutX="-1.0" layoutY="66.0" prefHeight="336.0" prefWidth="183.0">
          <children>
-            <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Deposit">
+            <Button fx:id="deposite_button" layoutX="17.0" layoutY="14.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Deposit">
                <styleClass>
                   <String fx:value="sidebarItem" />
                   <String fx:value="colorbar" />
@@ -279,7 +279,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="19.0" layoutY="111.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Check Balance">
+            <Button fx:id="balance_button" layoutX="19.0" layoutY="111.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Check Balance">
                <styleClass>
                   <String fx:value="sidebarItem" />
                   <String fx:value="colorbar" />
@@ -293,7 +293,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="19.0" layoutY="205.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Transfer">
+            <Button fx:id="transfer_button" layoutX="19.0" layoutY="205.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Transfer">
                <styleClass>
                   <String fx:value="sidebarItem" />
                   <String fx:value="colorbar" />
