@@ -24,6 +24,7 @@ public class customer {
 
         PreparedStatement pCheckUser = null;
         PreparedStatement pInsert = null;
+        PreparedStatement tInsert = null;
         ResultSet resultSet = null;
 
         
@@ -47,10 +48,15 @@ public class customer {
                 int phone_no = Integer.valueOf(tellNo);
                 pInsert.setInt(6, phone_no);
                 pInsert.setString(7, password);
-                int account_no = 1344345226; // Don't forget to make this random and unique so the database will accept it
+                int account_no = 1234434; // Don't forget to make this random and unique so the database will accept it
                 pInsert.setInt(8, account_no);
 
+                tInsert = connection.prepareStatement("Insert into Transactions values (?, ?)");
+                tInsert.setInt(1, account_no);
+                tInsert.setInt(2, 0);
+
                 pInsert.executeUpdate();
+                tInsert.execute();
                 
 
                 Utils.ChangeScene(event, "Created Account", "LoggedIn.fxml", email);
