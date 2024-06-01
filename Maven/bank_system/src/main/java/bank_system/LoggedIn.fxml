@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@Style.css" type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="page.LoggedInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank_system.LoggedInController">
    <children>
       <BorderPane layoutX="115.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -39,7 +39,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="136.0" style="-fx-background-color: White;" styleClass="menuItem" text="Local Transaction">
+                        <Button fx:id="transactLocal_button" mnemonicParsing="false" prefHeight="38.0" prefWidth="136.0" style="-fx-background-color: White;" styleClass="menuItem" text="Local Transaction">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -86,7 +86,7 @@
                <children>
                   <VBox layoutX="38.0" layoutY="39.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: B3D9FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0">
                      <children>
-                        <Button fx:id="home_button" alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="38.0" prefWidth="575.0" text="Home">
+                        <Button fx:id="home_button2" alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="38.0" prefWidth="575.0" text="Home">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -189,4 +189,4 @@
          </left>
       </BorderPane>
    </children>
-</fx:root>
+</AnchorPane>
