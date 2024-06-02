@@ -7,25 +7,52 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class LoggedInController implements Initializable {
+
 
     @FXML
     private Button accType_button;
 
     @FXML
+    private Button balance_button;
+
+    @FXML
+    private Button deposite_button;
+
+    @FXML
+    private Button exchange_button;
+
+    @FXML
     private Button home_button;
 
     @FXML
+    private Button home_button2;
+
+    @FXML
+    private AnchorPane home_pane;
+
+    @FXML
+    private AnchorPane home_pane2;
+
+    @FXML
     private Button live_button;
+
+    @FXML
+    private Button live_button2;
 
     @FXML
     private Button logout_button;
@@ -43,10 +70,27 @@ public class LoggedInController implements Initializable {
     private AnchorPane slider;
 
     @FXML
+    private Button topUp_button;
+
+    @FXML
+    private Button transactLocal_button;
+
+    @FXML
+    private Button transfer_button;
+
+    @FXML
+    private ImageView travel_button;
+
+    @FXML
     private Button user_button;
 
     @FXML
-    private AnchorPane home_pane;
+    private Button utilities_button;
+
+    @FXML
+    private Button withdraw_button;
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
@@ -96,6 +140,49 @@ public class LoggedInController implements Initializable {
                 Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", null);
             }
         });
+
+        live_button2.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                String checkout_url = ChapaConnection.payment("Yosef@gmail.com", "yosef", "fetene", "100").getAsJsonObject("detail").getAsJsonObject("data").get("checkout_url").getAsString();
+                ChapaConnection.checkout_url = checkout_url;
+                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", null);                
+            }
+        });
+
+        deposite_button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("Deposit.fxml"));
+                    Scene scene = new Scene(root);
+    
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        withdraw_button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("Withdraw.fxml"));
+                    Scene scene = new Scene(root);
+    
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });        
     }
 
 }

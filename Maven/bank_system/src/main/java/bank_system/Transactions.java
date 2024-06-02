@@ -12,6 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 
 public class Transactions {
+
+    static DepositController depositController;
+    static WithdrawController withdrawController;
+
     public static String connectionUrl =
     "jdbc:sqlserver://DESKTOP-1G41PS0\\SQLEXPRESS;"
                     + "database=Bank;"
@@ -335,7 +339,7 @@ public class Transactions {
                             Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
                             okButton.setOnAction(e -> {
                                 // Perform your action here
-                                System.out.println("OK button was clicked!");
+                                Transactions.depositController.cancelDepo_button.fire();
                             });
                                     alert.showAndWait();
                              con.close();
@@ -447,7 +451,7 @@ public class Transactions {
                         Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
                         okButton.setOnAction(e -> {
                             // Perform your action here
-                            System.out.println("OK button was clicked!");
+                            Transactions.withdrawController.cancelWith_button.fire();
                         });
                                 alert.showAndWait();
                          con.close();
