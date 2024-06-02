@@ -91,7 +91,7 @@ public class LoggedInController implements Initializable {
     @FXML
     private Button withdraw_button;
 
-    String Email = Utils.Email;
+    public static String Email = Utils.Email;
     String account_no = customer.Account_no_retriver(Email);
 
     @Override
@@ -137,18 +137,17 @@ public class LoggedInController implements Initializable {
         live_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){
-                String checkout_url = ChapaConnection.payment("Yosef@gmail.com", "yosef", "fetene", "100").getAsJsonObject("detail").getAsJsonObject("data").get("checkout_url").getAsString();
-                ChapaConnection.checkout_url = checkout_url;
-                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", null);
+                // String checkout_url = ChapaConnection.payment("Yosef@gmail.com", "yosef", "fetene", "100").getAsJsonObject("detail").getAsJsonObject("data").get("checkout_url").getAsString();
+                // ChapaConnection.checkout_url = checkout_url;
+                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", Email);
             }
         });
 
         live_button2.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
-                String checkout_url = ChapaConnection.payment("Yosef@gmail.com", "yosef", "fetene", "100").getAsJsonObject("detail").getAsJsonObject("data").get("checkout_url").getAsString();
-                ChapaConnection.checkout_url = checkout_url;
-                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", null);                
+
+                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", Email);                
             }
         });
 
