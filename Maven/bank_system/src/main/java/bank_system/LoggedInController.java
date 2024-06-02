@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -90,7 +91,8 @@ public class LoggedInController implements Initializable {
     @FXML
     private Button withdraw_button;
 
-
+    String Email = Utils.Email;
+    String account_no = customer.Account_no_retriver(Email);
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
@@ -182,7 +184,25 @@ public class LoggedInController implements Initializable {
                     e.printStackTrace();
                 }
             }
-        });        
+        });  
+        
+        balance_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                
+                try {
+                    float balance = Transactions.checkBalance(Integer.valueOf(account_no));
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Your balance is " + balance);
+                    alert.setHeaderText("Balance");
+                    alert.show();
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
 }
