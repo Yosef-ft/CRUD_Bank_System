@@ -1,62 +1,59 @@
 package bank_system;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
-public class DepositController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    @FXML
-    private Button accType_button;
-
-    @FXML
-    private TextField amount_lineEdit;
-
-    @FXML
-    private Button cancelDepo_button;
+public class DepositController implements Initializable {
 
     @FXML
-    private Button depositChapa_button;
+    public Button cancelDepo_button;
 
     @FXML
     private Button depositDB_button;
 
     @FXML
-    private Button home_button;
-
-    @FXML
     private Button home_button2;
 
     @FXML
-    private AnchorPane home_pane2;
+    private TextField amount_lineEdit;
+    
+    String Email = Utils.Email;
+    String account_no = customer.Account_no_retriver(Email);
 
-    @FXML
-    private Button live_button;
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
 
-    @FXML
-    private Button live_button2;
+        Transactions.depositController = this;
 
-    @FXML
-    private Button logout_button;
+        cancelDepo_button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                Stage stage = (Stage) cancelDepo_button.getScene().getWindow();
+                stage.close();
+            }
+        });
 
-    @FXML
-    private Label menuBack_button;
+        depositDB_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                Transactions.deposit(account_no, amount_lineEdit.getText());
+            }
+        });
 
-    @FXML
-    private Label menu_button;
-
-    @FXML
-    private Button recent_button;
-
-    @FXML
-    private AnchorPane slider;
-
-    @FXML
-    private Button transactLocal_button;
-
-    @FXML
-    private Button user_button;
-
+        home_button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                Stage stage = (Stage) home_button2.getScene().getWindow();
+                stage.close();
+            }
+        });
+    }
 }

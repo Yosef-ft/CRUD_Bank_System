@@ -90,8 +90,6 @@ public class LoggedInController implements Initializable {
     @FXML
     private Button withdraw_button;
 
-    String Email = Utils.Email;
-    String account_no = customer.Account_no_retriver(Email);
 
 
     @Override

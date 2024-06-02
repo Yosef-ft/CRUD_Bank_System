@@ -40,7 +40,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField layoutX="95.0" layoutY="157.0" promptText="Enter the amount" />
+      <TextField fx:id="amount_lineEdit" layoutX="95.0" layoutY="157.0" promptText="Enter the amount" />
       <Button fx:id="depositDB_button" layoutX="65.0" layoutY="219.0" mnemonicParsing="false" text="Deposit">
          <styleClass>
             <String fx:value="sidebarItem" />
