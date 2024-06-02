@@ -203,6 +203,23 @@ public class LoggedInController implements Initializable {
 
             }
         });
+
+        transfer_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                Parent root;
+                try{
+                    root = FXMLLoader.load(getClass().getResource("Transfer.fxml"));
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.setTitle("Transfer");
+                    stage.show();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }

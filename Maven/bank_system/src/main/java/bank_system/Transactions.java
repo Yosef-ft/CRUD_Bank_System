@@ -15,28 +15,28 @@ public class Transactions {
 
     static DepositController depositController;
     static WithdrawController withdrawController;
+    static TransferController transferController;
 
-    public static String connectionUrl =
-    "jdbc:sqlserver://DESKTOP-1G41PS0\\SQLEXPRESS;"
-                    + "database=Bank;"
-                    + "integratedSecurity=true;"
-                    + "encrypt=true;"
-                    + "trustServerCertificate=true;"
-                    + "loginTimeout=30;";
+    public static String connectionUrl = "jdbc:sqlserver://DESKTOP-1G41PS0\\SQLEXPRESS;"
+            + "database=Bank;"
+            + "integratedSecurity=true;"
+            + "encrypt=true;"
+            + "trustServerCertificate=true;"
+            + "loginTimeout=30;";
 
-    static float max_withdraw_amaount= 5000; 
-    static float max_transfer_amaount=50000;
-    static  boolean add_amount_flag, deduction_amount_flag;
+    static float max_withdraw_amaount = 5000;
+    static float max_transfer_amaount = 50000;
+    static boolean add_amount_flag, deduction_amount_flag;
 
     // sample variables
-    int account_one=1, account_two=2;
+    int account_one = 1, account_two = 2;
 
-    static void registerDepositTransaction(int account_no, float amount){
-        String sql="insert into Transactions(sender_account, amount) values(?,?)";
+    static void registerDepositTransaction(int account_no, float amount) {
+        String sql = "insert into Transactions(sender_account, amount) values(?,?)";
 
-        try (Connection con= DriverManager.getConnection(connectionUrl);
-        PreparedStatement statement= con.prepareStatement(sql)){
-            try{
+        try (Connection con = DriverManager.getConnection(connectionUrl);
+                PreparedStatement statement = con.prepareStatement(sql)) {
+            try {
                 statement.setInt(1, account_no);
                 statement.setFloat(2, amount);
 
@@ -46,17 +46,16 @@ public class Transactions {
             } catch (Exception e) {
                 con.close();
             }
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    static void registerTransferTransaction(int sender_account, int reciever_account, float amount){
-        String sql="insert into Transactions(sender_account, receiver_account, amount) values(?,?,?)";
-        try (Connection con= DriverManager.getConnection(connectionUrl);
-        PreparedStatement statement= con.prepareStatement(sql)){
-            try{
+    static void registerTransferTransaction(int sender_account, int reciever_account, float amount) {
+        String sql = "insert into Transactions(sender_account, receiver_account, amount) values(?,?,?)";
+        try (Connection con = DriverManager.getConnection(connectionUrl);
+                PreparedStatement statement = con.prepareStatement(sql)) {
+            try {
                 statement.setInt(1, sender_account);
                 statement.setInt(2, reciever_account);
                 statement.setFloat(3, amount);
@@ -67,18 +66,17 @@ public class Transactions {
             } catch (Exception e) {
                 con.close();
             }
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    static void registerWithdrawTransaction(int account_no, float amount){
-        amount*=-1;
-        String sql="insert into Transactions(sender_account, amount) values(?,?)";
-        try (Connection con= DriverManager.getConnection(connectionUrl);
-        PreparedStatement statement= con.prepareStatement(sql)){
-            try{
+    static void registerWithdrawTransaction(int account_no, float amount) {
+        amount *= -1;
+        String sql = "insert into Transactions(sender_account, amount) values(?,?)";
+        try (Connection con = DriverManager.getConnection(connectionUrl);
+                PreparedStatement statement = con.prepareStatement(sql)) {
+            try {
                 statement.setInt(1, account_no);
                 statement.setFloat(2, amount);
 
@@ -88,39 +86,38 @@ public class Transactions {
             } catch (Exception e) {
                 con.close();
             }
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    static void update(float amount, int sender_account, int reciever_account, boolean add_amount_flag,boolean deduction_amount_flag) throws SQLException{
+    static void update(float amount, int sender_account, int reciever_account, boolean add_amount_flag,
+            boolean deduction_amount_flag) throws SQLException {
         Alert alert;
-        String sql="update AccountBalance set balance= balance - ? where account_no=?";
+        String sql = "update AccountBalance set balance= balance - ? where account_no=?";
 
-        try (Connection con= DriverManager.getConnection(connectionUrl);
-        PreparedStatement statement= con.prepareStatement(sql)){
-            try{
+        try (Connection con = DriverManager.getConnection(connectionUrl);
+                PreparedStatement statement = con.prepareStatement(sql)) {
+            try {
                 statement.setFloat(1, amount);
                 statement.setInt(2, sender_account);
 
                 // executing query
                 statement.executeUpdate();
-                deduction_amount_flag=true;
+                deduction_amount_flag = true;
                 con.close();
             } catch (Exception e) {
-                
-                deduction_amount_flag=false;
+
+                deduction_amount_flag = false;
                 con.close();
-                alert= new Alert(AlertType.ERROR);
+                alert = new Alert(AlertType.ERROR);
                 alert.setContentText("CoundN't excecute your query, Please Try again");
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText(null);
                 alert.showAndWait();
             }
-        }
-        catch(SQLException ex){
-            alert= new Alert(AlertType.ERROR);
+        } catch (SQLException ex) {
+            alert = new Alert(AlertType.ERROR);
             alert.setContentText("Couldnt connect to databse, Please Try again");
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
@@ -128,31 +125,29 @@ public class Transactions {
             ex.printStackTrace();
         }
 
-        sql="update AccountBalance set balance= balance + ? where account_no=?";
+        sql = "update AccountBalance set balance= balance + ? where account_no=?";
 
-        try (Connection con= DriverManager.getConnection(connectionUrl);
-        PreparedStatement statement= con.prepareStatement(sql)){
-            try{
-            statement.setFloat(1, amount);
-            statement.setInt(2, reciever_account);
-            
-            statement.executeUpdate();
-            add_amount_flag=true;
-            con.close();
-            } 
-            catch (Exception e) {
-                
+        try (Connection con = DriverManager.getConnection(connectionUrl);
+                PreparedStatement statement = con.prepareStatement(sql)) {
+            try {
+                statement.setFloat(1, amount);
+                statement.setInt(2, reciever_account);
+
+                statement.executeUpdate();
+                add_amount_flag = true;
                 con.close();
-                add_amount_flag=false;
-                alert= new Alert(AlertType.ERROR);
+            } catch (Exception e) {
+
+                con.close();
+                add_amount_flag = false;
+                alert = new Alert(AlertType.ERROR);
                 alert.setContentText("CoundN't excecute your query, Please Try again");
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText(null);
                 alert.showAndWait();
             }
-        }
-        catch(SQLException ex){
-            alert= new Alert(AlertType.ERROR);
+        } catch (SQLException ex) {
+            alert = new Alert(AlertType.ERROR);
             alert.setContentText("Couldnt connect to databse, Please Try again");
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
@@ -161,69 +156,66 @@ public class Transactions {
         }
     }
 
-    static void reverseUpdate(boolean add_amount_flag,boolean deduction_amount_flag, float amount, int sender_account, int reciever_account){
+    static void reverseUpdate(boolean add_amount_flag, boolean deduction_amount_flag, float amount, int sender_account,
+            int reciever_account) {
         Alert alert;
         String sql;
-        if (add_amount_flag== false && deduction_amount_flag== true) {
-            
-            sql="update AccountBalance set balance= balance + ? where account_no=?";
+        if (add_amount_flag == false && deduction_amount_flag == true) {
 
-            try (Connection con= DriverManager.getConnection(connectionUrl);
-            PreparedStatement statement= con.prepareStatement(sql)){
-                try{
-                statement.setFloat(1, amount);
-                statement.setInt(2, sender_account);
-                
-                statement.executeUpdate();
-                deduction_amount_flag=true;
-                con.close();
-                } 
-                catch (Exception e) {
-                    
+            sql = "update AccountBalance set balance= balance + ? where account_no=?";
+
+            try (Connection con = DriverManager.getConnection(connectionUrl);
+                    PreparedStatement statement = con.prepareStatement(sql)) {
+                try {
+                    statement.setFloat(1, amount);
+                    statement.setInt(2, sender_account);
+
+                    statement.executeUpdate();
+                    deduction_amount_flag = true;
                     con.close();
-                    deduction_amount_flag=false;
-                    alert= new Alert(AlertType.ERROR);
+                } catch (Exception e) {
+
+                    con.close();
+                    deduction_amount_flag = false;
+                    alert = new Alert(AlertType.ERROR);
                     alert.setContentText("CoundN't excecute your query, Please Try again");
                     alert.setTitle("Information Dialog");
                     alert.setHeaderText(null);
                     alert.showAndWait();
                 }
-            }
-            catch(SQLException ex){
-                alert= new Alert(AlertType.ERROR);
+            } catch (SQLException ex) {
+                alert = new Alert(AlertType.ERROR);
                 alert.setContentText("Couldnt connect to databse, Please Try again");
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText(null);
                 alert.showAndWait();
                 ex.printStackTrace();
             }
-        }
-        else if (add_amount_flag== true && deduction_amount_flag== false) {
-            sql="update AccountBalance set balance= balance - ? where account_no=?";
+        } else if (add_amount_flag == true && deduction_amount_flag == false) {
+            sql = "update AccountBalance set balance= balance - ? where account_no=?";
 
-            try (Connection con= DriverManager.getConnection(connectionUrl);
-            PreparedStatement statement= con.prepareStatement(sql)){
-                try{
+            try (Connection con = DriverManager.getConnection(connectionUrl);
+                    PreparedStatement statement = con.prepareStatement(sql)) {
+                try {
                     statement.setFloat(1, amount);
                     statement.setInt(2, reciever_account);
-    
+
                     // executing query
                     statement.executeUpdate();
-                    add_amount_flag=true;
+                    add_amount_flag = true;
                     con.close();
                 } catch (Exception e) {
                     // TODO: handle exception
-                    add_amount_flag=false;
+                    add_amount_flag = false;
                     con.close();
-                    alert= new Alert(AlertType.ERROR);
+                    alert = new Alert(AlertType.ERROR);
                     alert.setContentText("CoundN't excecute your query, Please Try again");
                     alert.setTitle("Information Dialog");
                     alert.setHeaderText(null);
                     alert.showAndWait();
                 }
-            }
-            catch(SQLException ex){
-                alert= new Alert(AlertType.ERROR);
+            } catch (SQLException ex) {
+                alert = new Alert(AlertType.ERROR);
                 alert.setContentText("Couldnt connect to databse, Please Try again");
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText(null);
@@ -233,28 +225,27 @@ public class Transactions {
         }
     }
 
+    static float checkBalance(int account_no) throws Exception {
+        String balance = "";
 
-    static float checkBalance(int account_no) throws Exception{
-        String balance="";
-        
         // try {
-        //     Class.forName("com.mysql.cj.jdbc.Driver");
+        // Class.forName("com.mysql.cj.jdbc.Driver");
         // } catch (ClassNotFoundException e) {
-        //     // TODO: handle exception
-        //     System.out.println("Class not found");
+        // // TODO: handle exception
+        // System.out.println("Class not found");
         // }
 
-       String sql= "select balance from AccountBalance where account_no= ?";
-        
-        try(Connection con= DriverManager.getConnection(connectionUrl);
-            PreparedStatement statement= con.prepareStatement(sql);) {
+        String sql = "select balance from AccountBalance where account_no= ?";
+
+        try (Connection con = DriverManager.getConnection(connectionUrl);
+                PreparedStatement statement = con.prepareStatement(sql);) {
             statement.setInt(1, account_no);
 
-           try( ResultSet rs= statement.executeQuery();){
+            try (ResultSet rs = statement.executeQuery();) {
                 if (rs.next()) {
-                   balance = rs.getString("balance");
+                    balance = rs.getString("balance");
                 }
-           }
+            }
 
             con.close();
         } catch (SQLException e) {
@@ -262,17 +253,17 @@ public class Transactions {
             System.out.println("daatabse doesnt connect");
             e.printStackTrace();
         }
-        
-        float bal= Float.parseFloat(balance);
+
+        float bal = Float.parseFloat(balance);
         return bal;
     }
 
-    public static void deposit(String account_nun, String deposit_amount){
+    public static void deposit(String account_nun, String deposit_amount) {
         Alert alert;
-        float amount=0;
-        float balance_before_deposit=0;
-        float balance_after_deposit=0;
-        int account_no= Integer.parseInt(account_nun);
+        float amount = 0;
+        float balance_before_deposit = 0;
+        float balance_after_deposit = 0;
+        int account_no = Integer.parseInt(account_nun);
 
         try {
             balance_before_deposit = Transactions.checkBalance(account_no);
@@ -280,94 +271,92 @@ public class Transactions {
             e.printStackTrace();
         }
 
-        if (InputValidator.isFloat( deposit_amount) || deposit_amount=="") {
-            amount= Float.parseFloat(deposit_amount);
+        if (InputValidator.isFloat(deposit_amount) || deposit_amount == "") {
+            amount = Float.parseFloat(deposit_amount);
             {
                 // try {
-                //         Class.forName("com.mysql.cj.jdbc.Driver");
-                //     } catch (Exception e) {
-                //         // TODO: handle exception
-                //         alert= new Alert(AlertType.ERROR);
-                //         alert.setContentText("The Driver is not working");
-                //         alert.setTitle("Information Dialog");
-                //         alert.setHeaderText("null");
-                //         alert.showAndWait();
-                //         e.printStackTrace();
-                //     }
-    
-                    String sql="update AccountBalance set balance= balance + ? where account_no=?";
-                    try(Connection con= DriverManager.getConnection(connectionUrl);
-                    PreparedStatement statement= con.prepareStatement(sql);) {
-                        statement.setFloat(1, amount);
-                        statement.setInt(2, account_no);
-    
-                        try{
-                            statement.executeUpdate();
-                        }
-                        catch(Exception ex){
-                            alert= new Alert(AlertType.ERROR);
-                            alert.setContentText("Error on statement execution, Try Again");
-                            alert.setTitle("Information Dialog");
-                            alert.setHeaderText("Error");
-                            alert.showAndWait();
-                            ex.printStackTrace();
-                            con.close();
-                        }
-    
-                            try{
-                                balance_after_deposit= Transactions.checkBalance(account_no);
-                            } catch (Exception e) {
-                                
-                                alert= new Alert(AlertType.ERROR);
-                                alert.setContentText("Error on statement execution, Try Again");
-                                alert.setTitle("Information Dialog");
-                                alert.setHeaderText("null");
-                                alert.showAndWait();
-                                e.printStackTrace();
-                                con.close();
-                            }
-    
-                            // showinhg the befor and after balances
-                            alert = new Alert(AlertType.INFORMATION);
-                            alert.setContentText("balance before deposit =" + balance_before_deposit + "\n" +
+                // Class.forName("com.mysql.cj.jdbc.Driver");
+                // } catch (Exception e) {
+                // // TODO: handle exception
+                // alert= new Alert(AlertType.ERROR);
+                // alert.setContentText("The Driver is not working");
+                // alert.setTitle("Information Dialog");
+                // alert.setHeaderText("null");
+                // alert.showAndWait();
+                // e.printStackTrace();
+                // }
+
+                String sql = "update AccountBalance set balance= balance + ? where account_no=?";
+                try (Connection con = DriverManager.getConnection(connectionUrl);
+                        PreparedStatement statement = con.prepareStatement(sql);) {
+                    statement.setFloat(1, amount);
+                    statement.setInt(2, account_no);
+
+                    try {
+                        statement.executeUpdate();
+                    } catch (Exception ex) {
+                        alert = new Alert(AlertType.ERROR);
+                        alert.setContentText("Error on statement execution, Try Again");
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText("Error");
+                        alert.showAndWait();
+                        ex.printStackTrace();
+                        con.close();
+                    }
+
+                    try {
+                        balance_after_deposit = Transactions.checkBalance(account_no);
+                    } catch (Exception e) {
+
+                        alert = new Alert(AlertType.ERROR);
+                        alert.setContentText("Error on statement execution, Try Again");
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText("null");
+                        alert.showAndWait();
+                        e.printStackTrace();
+                        con.close();
+                    }
+
+                    // showinhg the befor and after balances
+                    alert = new Alert(AlertType.INFORMATION);
+                    alert.setContentText("balance before deposit =" + balance_before_deposit + "\n" +
                             "balance after deposit =" + balance_after_deposit);
-                            alert.setTitle("Information Dialog");
-                            alert.setHeaderText("Succesfully Deposited");
-                            
-                            Transactions.registerDepositTransaction(account_no, amount);
-                            alert.getButtonTypes().setAll(ButtonType.OK);
-                            Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
-                            okButton.setOnAction(e -> {
-                                // Perform your action here
-                                Transactions.depositController.cancelDepo_button.fire();
-                            });
-                                    alert.showAndWait();
-                             con.close();
-    
-                            //  add a conditin if the IK button of the alert is ckiked keading to the HOME page
-                        } 
-                        catch (Exception e) {
-                            alert= new Alert(AlertType.ERROR);
-                            alert.setContentText("the database is not connecting");
-                            alert.setTitle("Information Dialog");
-                            alert.setHeaderText("null");
-                            alert.showAndWait();
-                            e.printStackTrace();
-                     }
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Succesfully Deposited");
+
+                    Transactions.registerDepositTransaction(account_no, amount);
+                    alert.getButtonTypes().setAll(ButtonType.OK);
+                    Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                    okButton.setOnAction(e -> {
+                        // Perform your action here
+                        Transactions.depositController.cancelDepo_button.fire();
+                    });
+                    alert.showAndWait();
+                    con.close();
+
+                    // add a conditin if the IK button of the alert is ckiked keading to the HOME
+                    // page
+                } catch (Exception e) {
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setContentText("the database is not connecting");
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("null");
+                    alert.showAndWait();
+                    e.printStackTrace();
                 }
-      
+            }
 
         }
-  
+
     }
 
-    static void withdraw(String account_num, String withdrawal_amoount){
-        float amount=0,balance_before_withdraw =0;
-        float balance_after_withdraw=0;
-        int account_no=Integer.parseInt(account_num);
+    static void withdraw(String account_num, String withdrawal_amoount) {
+        float amount = 0, balance_before_withdraw = 0;
+        float balance_after_withdraw = 0;
+        int account_no = Integer.parseInt(account_num);
         Alert alert;
         String sql;
-        
+
         try {
             balance_before_withdraw = Transactions.checkBalance(account_no);
         } catch (Exception e) {
@@ -375,203 +364,209 @@ public class Transactions {
             e.printStackTrace();
         }
 
-        if (InputValidator.isFloat(withdrawal_amoount) || withdrawal_amoount=="") {
-            amount=Float.parseFloat(withdrawal_amoount);
+        if (InputValidator.isFloat(withdrawal_amoount) || withdrawal_amoount == "") {
+            amount = Float.parseFloat(withdrawal_amoount);
         }
 
         if (amount > balance_before_withdraw) {
-            alert= new Alert(AlertType.ERROR);
+            alert = new Alert(AlertType.ERROR);
             alert.setContentText("Please try Again with a smaller amount");
             alert.setTitle("Information Dialog");
             alert.setHeaderText("Insufficient balance!");
             alert.showAndWait();
-        }
-        else if(amount > Transactions.max_withdraw_amaount){
-            alert= new Alert(AlertType.ERROR);
+        } else if (amount > Transactions.max_withdraw_amaount) {
+            alert = new Alert(AlertType.ERROR);
             alert.setContentText("The amount is beyond the limit, Try Again");
             alert.setTitle("Information Dialog");
             alert.setHeaderText("null");
             alert.showAndWait();
-        }
-        else{
+        } else {
             // try {
-            //         Class.forName("com.mysql.cj.jdbc.Driver");
-            //     } catch (Exception e) {
-            //         // TODO: handle exception
-            //         alert= new Alert(AlertType.ERROR);
-            //         alert.setContentText("The Driver is not working, Try Again");
-            //         alert.setTitle("Information Dialog");
-            //         alert.setHeaderText("null");
-            //         alert.showAndWait();
-            //         e.printStackTrace();
-            //     }
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // } catch (Exception e) {
+            // // TODO: handle exception
+            // alert= new Alert(AlertType.ERROR);
+            // alert.setContentText("The Driver is not working, Try Again");
+            // alert.setTitle("Information Dialog");
+            // alert.setHeaderText("null");
+            // alert.showAndWait();
+            // e.printStackTrace();
+            // }
 
-                sql="update AccountBalance set balance= balance -? where account_no=?";
-                try(Connection con= DriverManager.getConnection(connectionUrl);
-                PreparedStatement statement= con.prepareStatement(sql);) {
-                    statement.setFloat(1, amount);
-                    statement.setInt(2, account_no);
+            sql = "update AccountBalance set balance= balance -? where account_no=?";
+            try (Connection con = DriverManager.getConnection(connectionUrl);
+                    PreparedStatement statement = con.prepareStatement(sql);) {
+                statement.setFloat(1, amount);
+                statement.setInt(2, account_no);
 
-                    try{
-                        statement.executeUpdate();
-                    }
-                    catch(Exception ex){
-                        alert= new Alert(AlertType.ERROR);
-                        alert.setContentText("Error on statement execution, Try Again");
-                        alert.setTitle("Information Dialog");
-                        alert.setHeaderText("null");
-                        alert.showAndWait();
-                        ex.printStackTrace();
-                        con.close();
-                    }
+                try {
+                    statement.executeUpdate();
+                } catch (Exception ex) {
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setContentText("Error on statement execution, Try Again");
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("null");
+                    alert.showAndWait();
+                    ex.printStackTrace();
+                    con.close();
+                }
 
-                        try{
-                            balance_after_withdraw= Transactions.checkBalance(account_no);
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                            alert= new Alert(AlertType.ERROR);
-                            alert.setContentText("Error on statement execution, Try Again");
-                            alert.setTitle("Information Dialog");
-                            alert.setHeaderText("null");
-                            alert.showAndWait();
-                            e.printStackTrace();
-                            con.close();
-                        }
+                try {
+                    balance_after_withdraw = Transactions.checkBalance(account_no);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setContentText("Error on statement execution, Try Again");
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("null");
+                    alert.showAndWait();
+                    e.printStackTrace();
+                    con.close();
+                }
 
-                        // showinhg the befor and after balances
-                        alert = new Alert(AlertType.INFORMATION);
-                        alert.setContentText("balance before withdraw =" + balance_before_withdraw + "\n" +
+                // showinhg the befor and after balances
+                alert = new Alert(AlertType.INFORMATION);
+                alert.setContentText("balance before withdraw =" + balance_before_withdraw + "\n" +
                         "balance after withr draw =" + balance_after_withdraw);
-                        alert.setTitle("Information Dialog");
-                        alert.setHeaderText("Succesfull withdrawal");
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Succesfull withdrawal");
 
-                        Transactions.registerWithdrawTransaction(account_no, amount);
+                Transactions.registerWithdrawTransaction(account_no, amount);
 
-                        alert.getButtonTypes().setAll(ButtonType.OK);
-                        Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
-                        okButton.setOnAction(e -> {
-                            // Perform your action here
-                            Transactions.withdrawController.cancelWith_button.fire();
-                        });
-                                alert.showAndWait();
-                         con.close();
+                alert.getButtonTypes().setAll(ButtonType.OK);
+                Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                okButton.setOnAction(e -> {
+                    // Perform your action here
+                    Transactions.withdrawController.cancelWith_button.fire();
+                });
+                alert.showAndWait();
+                con.close();
 
-                        //  add a conditin if the IK button of the alert is ckiked keading to the HOME page
-                    } 
-                    catch (Exception e) {
-                        alert= new Alert(AlertType.ERROR);
-                        alert.setContentText("the database is not connecting, Try Again");
-                        alert.setTitle("Information Dialog");
-                        alert.setHeaderText("null");
-                        alert.showAndWait();
-                        e.printStackTrace();
-                 }
+                // add a conditin if the IK button of the alert is ckiked keading to the HOME
+                // page
+            } catch (Exception e) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setContentText("the database is not connecting, Try Again");
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("null");
+                alert.showAndWait();
+                e.printStackTrace();
+            }
         }
     }
 
-    static void transfer(String sender_account, String reciever_account, String transfer_amount){
-       
+    static void transfer(String sender_account, String reciever_account, String transfer_amount) {
+
         Alert alert;
-        String sql= new String();
-        Transactions.add_amount_flag=true;
-        Transactions.deduction_amount_flag= true;
-        int s_acount= Integer.parseInt(sender_account), r_account;
-        float amount=0;
-        float balance_before_transfer=0, balance_after_transfer=0;
+        String sql = new String();
+        Transactions.add_amount_flag = true;
+        Transactions.deduction_amount_flag = true;
+        int s_acount = Integer.parseInt(sender_account), r_account;
+        float amount = 0;
+        float balance_before_transfer = 0, balance_after_transfer = 0;
 
         try {
-            balance_before_transfer= Transactions.checkBalance(s_acount);
+            balance_before_transfer = Transactions.checkBalance(s_acount);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
-        if (InputValidator.isFloat(transfer_amount)) {
-            amount= Float.parseFloat(transfer_amount);
-            if (InputValidator.isInteger(reciever_account)) {
-                r_account= Integer.parseInt(reciever_account);
 
-                if (amount> balance_before_transfer) {
-                    alert= new Alert(AlertType.ERROR);
+        if (InputValidator.isFloat(transfer_amount)) {
+            amount = Float.parseFloat(transfer_amount);
+            if (InputValidator.isInteger(reciever_account)) {
+                r_account = Integer.parseInt(reciever_account);
+
+                if (amount > balance_before_transfer) {
+                    alert = new Alert(AlertType.ERROR);
                     alert.setContentText("Insufficient balance");
                     alert.setTitle("Information Dialog");
                     alert.setHeaderText(null);
                     alert.showAndWait();
                 }
-        
-                else if(amount > Transactions.max_transfer_amaount){
-                    alert= new Alert(AlertType.ERROR);
+
+                else if (amount > Transactions.max_transfer_amaount) {
+                    alert = new Alert(AlertType.ERROR);
                     alert.setContentText("The amount is beyond the limit");
                     alert.setTitle("Information Dialog");
                     alert.setHeaderText(null);
                     alert.showAndWait();
                 }
-        
-                else{
+
+                else {
                     // try {
-                    //     Class.forName("com.mysql.cj.jdbc.Driver");
+                    // Class.forName("com.mysql.cj.jdbc.Driver");
                     // } catch (Exception e) {
-        
-                    //     alert= new Alert(AlertType.ERROR);
-                    //     alert.setContentText("The Driver is not working, Try Again");
-                    //     alert.setTitle("Information Dialog");
-                    //     alert.setHeaderText(null);
-                    //     alert.showAndWait();
-                    //     e.printStackTrace();
+
+                    // alert= new Alert(AlertType.ERROR);
+                    // alert.setContentText("The Driver is not working, Try Again");
+                    // alert.setTitle("Information Dialog");
+                    // alert.setHeaderText(null);
+                    // alert.showAndWait();
+                    // e.printStackTrace();
                     // }
-        
-        
-                    sql= "SELECT (CASE WHEN (SELECT COUNT(balance) FROM AccountBalance WHERE account_no = ? ) = 1 THEN 'true' ELSE 'false' END) AS balance";
-                    try (Connection con= DriverManager.getConnection(connectionUrl);
-                    PreparedStatement statement= con.prepareStatement(sql)){
+
+                    sql = "SELECT (CASE WHEN (SELECT COUNT(balance) FROM AccountBalance WHERE account_no = ? ) = 1 THEN 'true' ELSE 'false' END) AS balance";
+                    try (Connection con = DriverManager.getConnection(connectionUrl);
+                            PreparedStatement statement = con.prepareStatement(sql)) {
                         statement.setInt(1, r_account);
-        
-                        try (ResultSet rs= statement.executeQuery()){
+
+                        try (ResultSet rs = statement.executeQuery()) {
                             rs.next();
-                            String db_check=rs.getString("balance");
-                            boolean check= Boolean.parseBoolean(db_check);
+                            String db_check = rs.getString("balance");
+                            boolean check = Boolean.parseBoolean(db_check);
                             con.close();
-        
+
                             // check where the entered account esist in db or not
                             // if(check) System.out.println("true");
                             if (check) {
-        
-                                Transactions.update(amount,s_acount ,r_account, Transactions.add_amount_flag, Transactions.deduction_amount_flag);
+
+                                Transactions.update(amount, s_acount, r_account, Transactions.add_amount_flag,
+                                        Transactions.deduction_amount_flag);
                                 // if(check) System.out.println("true");
                                 // if(Transactions.add_amount_flag) System.out.println("true");
                                 // if(Transactions.deduction_amount_flag) System.out.println("true");
-                                if (Transactions.add_amount_flag==false || Transactions.deduction_amount_flag==false) {
-                                    Transactions.reverseUpdate(Transactions.add_amount_flag, Transactions.deduction_amount_flag, amount, s_acount ,r_account);
+                                if (Transactions.add_amount_flag == false
+                                        || Transactions.deduction_amount_flag == false) {
+                                    Transactions.reverseUpdate(Transactions.add_amount_flag,
+                                            Transactions.deduction_amount_flag, amount, s_acount, r_account);
                                     // check=false;
-                                }   
-                                else{
-                                    balance_after_transfer= Transactions.checkBalance(s_acount);
+                                } else {
+                                    balance_after_transfer = Transactions.checkBalance(s_acount);
+                                    Transactions.registerTransferTransaction(s_acount, r_account, amount);
                                     // if(check) System.out.println("true");
                                     // if(Transactions.add_amount_flag) System.out.println("true");
                                     // if(Transactions.deduction_amount_flag) System.out.println("true");
-                                    alert= new Alert(AlertType.INFORMATION);
+                                    alert = new Alert(AlertType.INFORMATION);
                                     alert.setContentText(
-                                                        "   balance before transfer =" + balance_before_transfer + "\n" +
-                                                        "   balance after transfer =" + balance_after_transfer);
+                                            "   balance before transfer =" + balance_before_transfer + "\n" +
+                                                    "   balance after transfer =" + balance_after_transfer);
                                     alert.setTitle("Information Dialog");
                                     alert.setHeaderText("Successfully Transfered");
+
+
+                                    alert.getButtonTypes().setAll(ButtonType.OK);
+                                    Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                                    okButton.setOnAction(e -> {
+                                        // Perform your action here
+                                        Transactions.transferController.cancelWith_button.fire();
+                                    });
+
                                     alert.showAndWait();
 
-                                    Transactions.registerTransferTransaction(s_acount, r_account, amount);
                                 }
-        
-                            }
-                            else{
-                                alert= new Alert(AlertType.ERROR);
-                                alert.setContentText("there is no account "+ r_account + "registered in the database");
+
+                            } else {
+                                alert = new Alert(AlertType.ERROR);
+                                alert.setContentText("there is no account " + r_account + "registered in the database");
                                 alert.setTitle("Information Dialog");
                                 alert.setHeaderText(null);
                                 alert.showAndWait();
                             }
                         } catch (Exception e) {
-                            
+
                             con.close();
-                            alert= new Alert(AlertType.ERROR);
+                            alert = new Alert(AlertType.ERROR);
                             alert.setContentText("Error on fetching data from the database, Please Try Again");
                             alert.setTitle("Information Dialog");
                             alert.setHeaderText(null);
@@ -579,8 +574,8 @@ public class Transactions {
                         }
                         con.close();
                     } catch (Exception e) {
-                        
-                        alert= new Alert(AlertType.ERROR);
+
+                        alert = new Alert(AlertType.ERROR);
                         alert.setContentText("Couldn't connect to database, Please Try Again");
                         alert.setTitle("Information Dialog");
                         alert.setHeaderText(null);
@@ -589,22 +584,20 @@ public class Transactions {
                 }
 
             } else {
-                alert= new Alert(AlertType.ERROR);
+                alert = new Alert(AlertType.ERROR);
                 alert.setContentText("Error, Please Enter a valid number");
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText("Invalid Input");
                 alert.showAndWait();
             }
-        }
-        else{
-            alert= new Alert(AlertType.ERROR);
+        } else {
+            alert = new Alert(AlertType.ERROR);
             alert.setContentText("Error, Please Enter a valid number");
             alert.setTitle("Information Dialog");
             alert.setHeaderText("Invalid Input");
             alert.showAndWait();
         }
-    
-    }
 
+    }
 
 }

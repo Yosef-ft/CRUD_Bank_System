@@ -38,7 +38,7 @@ public class customer {
                 alert.setContentText("The email already exists please insert a valid email");
                 alert.show();
             }else{
-                pInsert = connection.prepareStatement("Insert into Customer values (?,?,?,?,?,?,?,?)");
+                pInsert = connection.prepareStatement("Insert into Customer values (?,?,?,?,?,?,?,?,?)");
                 pInsert.setString(1, fName);
                 pInsert.setString(2, lName);
                 int int_age = Integer.valueOf(age);
@@ -48,10 +48,11 @@ public class customer {
                 int phone_no = Integer.valueOf(tellNo);
                 pInsert.setInt(6, phone_no);
                 pInsert.setString(7, password);
-                int account_no = 1234434; // Don't forget to make this random and unique so the database will accept it
+                int account_no = 12344345; // Don't forget to make this random and unique so the database will accept it
                 pInsert.setInt(8, account_no);
+                pInsert.setString(9,"Checking");
 
-                tInsert = connection.prepareStatement("Insert into Transactions values (?, ?)");
+                tInsert = connection.prepareStatement("Insert into AccountBalance values (?, ?)");
                 tInsert.setInt(1, account_no);
                 tInsert.setInt(2, 0);
 
