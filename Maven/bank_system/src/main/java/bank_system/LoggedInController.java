@@ -166,6 +166,23 @@ public class LoggedInController implements Initializable {
                 }
             }
         });
+
+        withdraw_button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("Withdraw.fxml"));
+                    Scene scene = new Scene(root);
+    
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });        
     }
 
 }
