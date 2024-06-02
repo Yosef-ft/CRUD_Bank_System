@@ -381,9 +381,9 @@ public class Transactions {
 
         if (amount > balance_before_withdraw) {
             alert= new Alert(AlertType.ERROR);
-            alert.setContentText("Insufficient balance, Try Again");
+            alert.setContentText("Please try Again with a smaller amount");
             alert.setTitle("Information Dialog");
-            alert.setHeaderText("null");
+            alert.setHeaderText("Insufficient balance!");
             alert.showAndWait();
         }
         else if(amount > Transactions.max_withdraw_amaount){
