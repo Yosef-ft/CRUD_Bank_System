@@ -48,7 +48,7 @@ public class customer {
                 int phone_no = Integer.valueOf(tellNo);
                 pInsert.setInt(6, phone_no);
                 pInsert.setString(7, password);
-                int account_no = 12344345; // Don't forget to make this random and unique so the database will accept it
+                int account_no = 123474345; // Don't forget to make this random and unique so the database will accept it
                 pInsert.setInt(8, account_no);
                 pInsert.setString(9,"Checking");
 

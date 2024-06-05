@@ -43,6 +43,7 @@ public class chapaController implements Initializable {
         link_button.setOnAction(event -> {
             String checkout_url = ChapaConnection.payment(email_lineEdit.getText(), fname_lineEdit.getText(), Lname_lineEdit.getText(), amount_lineEdit.getText()).getAsJsonObject("detail").getAsJsonObject("data").get("checkout_url").getAsString();
             ChapaConnection.checkout_url = checkout_url;
+            System.out.println("Checout url: " + checkout_url);
             web_view.getEngine().load(checkout_url);
         });
     

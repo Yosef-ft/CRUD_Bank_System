@@ -32,7 +32,7 @@ public class Transactions {
     int account_one = 1, account_two = 2;
 
     static void registerDepositTransaction(int account_no, float amount) {
-        String sql = "insert into Transactions(sender_account, amount) values(?,?)";
+        String sql = "insert into Transactions(sender_account_no, amount) values(?,?)";
 
         try (Connection con = DriverManager.getConnection(connectionUrl);
                 PreparedStatement statement = con.prepareStatement(sql)) {
@@ -52,7 +52,7 @@ public class Transactions {
     }
 
     static void registerTransferTransaction(int sender_account, int reciever_account, float amount) {
-        String sql = "insert into Transactions(sender_account, receiver_account, amount) values(?,?,?)";
+        String sql = "insert into Transactions(sender_account_no, receiver_account_no, amount) values(?,?,?)";
         try (Connection con = DriverManager.getConnection(connectionUrl);
                 PreparedStatement statement = con.prepareStatement(sql)) {
             try {
@@ -73,7 +73,7 @@ public class Transactions {
 
     static void registerWithdrawTransaction(int account_no, float amount) {
         amount *= -1;
-        String sql = "insert into Transactions(sender_account, amount) values(?,?)";
+        String sql = "insert into Transactions(sender_account_no, amount) values(?,?)";
         try (Connection con = DriverManager.getConnection(connectionUrl);
                 PreparedStatement statement = con.prepareStatement(sql)) {
             try {

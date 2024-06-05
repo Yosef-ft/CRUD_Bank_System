@@ -27,12 +27,10 @@ create table AccountBalance(
 
 CREATE TABLE Transactions (
     transaction_id INT IDENTITY(1,1) PRIMARY KEY,
-    sender_account_no INT,
-    receiver_account_no INT,
+    sender_account_no INT REFERENCES Customer(account_no),
+    receiver_account_no INT REFERENCES Customer (account_no),
     amount FLOAT,
     transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT FK_sender_account_no FOREIGN KEY (sender_account_no) REFERENCES Customer(account_no),
-    CONSTRAINT FK_receiver_account_no FOREIGN KEY (receiver_account_no) REFERENCES Customer(account_no)
 );
 
 
