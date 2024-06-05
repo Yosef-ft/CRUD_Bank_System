@@ -1,5 +1,4 @@
 package page;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,6 +21,17 @@ public class Transactions {
     static void registerDepositTransaction(int account_no, float amount){
         String sql="insert into Transactions(sender_account, amount) values(?,?)";
 
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (Exception e) {
+            Alert alert;
+            alert= new Alert(AlertType.ERROR);
+            alert.setContentText("The Driver is not working, Try Again");
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+            e.printStackTrace();
+        }
         try (Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/BANK", "root","Root1234@@");
         PreparedStatement statement= con.prepareStatement(sql)){
             try{
@@ -42,6 +52,18 @@ public class Transactions {
 
     static void registerTransferTransaction(int sender_account, int reciever_account, float amount){
         String sql="insert into Transactions(sender_account, receiver_account, amount) values(?,?,?)";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (Exception e) {
+            Alert alert;
+            alert= new Alert(AlertType.ERROR);
+            alert.setContentText("The Driver is not working, Try Again");
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+            e.printStackTrace();
+        }
         try (Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/BANK", "root","Root1234@@");
         PreparedStatement statement= con.prepareStatement(sql)){
             try{
@@ -64,6 +86,18 @@ public class Transactions {
     static void registerWithdrawTransaction(int account_no, float amount){
         amount*=-1;
         String sql="insert into Transactions(sender_account, amount) values(?,?)";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (Exception e) {
+            Alert alert;
+            alert= new Alert(AlertType.ERROR);
+            alert.setContentText("The Driver is not working, Try Again");
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+            e.printStackTrace();
+        }
         try (Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/BANK", "root","Root1234@@");
         PreparedStatement statement= con.prepareStatement(sql)){
             try{
@@ -464,9 +498,10 @@ public class Transactions {
         String sql= new String();
         Transactions.add_amount_flag=true;
         Transactions.deduction_amount_flag= true;
-        int s_acount= Integer.parseInt(sender_account), r_account;
+        int s_acount= Integer.parseInt(sender_account), r_account=0;
         float amount=0;
         float balance_before_transfer=0, balance_after_transfer=0;
+        boolean check=false;
 
         try {
             balance_before_transfer= Transactions.checkBalance(s_acount);
@@ -518,7 +553,7 @@ public class Transactions {
                         try (ResultSet rs= statement.executeQuery()){
                             rs.next();
                             String db_check=rs.getString("balance");
-                            boolean check= Boolean.parseBoolean(db_check);
+                             check= Boolean.parseBoolean(db_check);
                             con.close();
         
                             // check where the entered account esist in db or not
@@ -545,8 +580,6 @@ public class Transactions {
                                     alert.setTitle("Information Dialog");
                                     alert.setHeaderText("Successfully Transfered");
                                     alert.showAndWait();
-
-                                    Transactions.registerTransferTransaction(s_acount, r_account, amount);
                                 }
         
                             }
@@ -591,6 +624,14 @@ public class Transactions {
             alert.setTitle("Information Dialog");
             alert.setHeaderText("Invalid Input");
             alert.showAndWait();
+        }
+
+        if (check) {
+            try {
+                Transfertrial.registerTransferTransaction(s_acount, r_account, amount);
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
         }
     
     }
