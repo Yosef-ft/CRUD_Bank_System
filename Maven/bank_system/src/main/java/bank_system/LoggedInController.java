@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -90,7 +91,8 @@ public class LoggedInController implements Initializable {
     @FXML
     private Button withdraw_button;
 
-
+    public static String Email = Utils.Email;
+    String account_no = customer.Account_no_retriver(Email);
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
@@ -135,18 +137,17 @@ public class LoggedInController implements Initializable {
         live_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){
-                String checkout_url = ChapaConnection.payment("Yosef@gmail.com", "yosef", "fetene", "100").getAsJsonObject("detail").getAsJsonObject("data").get("checkout_url").getAsString();
-                ChapaConnection.checkout_url = checkout_url;
-                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", null);
+                // String checkout_url = ChapaConnection.payment("Yosef@gmail.com", "yosef", "fetene", "100").getAsJsonObject("detail").getAsJsonObject("data").get("checkout_url").getAsString();
+                // ChapaConnection.checkout_url = checkout_url;
+                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", Email);
             }
         });
 
         live_button2.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
-                String checkout_url = ChapaConnection.payment("Yosef@gmail.com", "yosef", "fetene", "100").getAsJsonObject("detail").getAsJsonObject("data").get("checkout_url").getAsString();
-                ChapaConnection.checkout_url = checkout_url;
-                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", null);                
+
+                Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", Email);                
             }
         });
 
@@ -182,7 +183,42 @@ public class LoggedInController implements Initializable {
                     e.printStackTrace();
                 }
             }
-        });        
+        });  
+        
+        balance_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                
+                try {
+                    float balance = Transactions.checkBalance(Integer.valueOf(account_no));
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Your balance is " + balance);
+                    alert.setHeaderText("Balance");
+                    alert.show();
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        transfer_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                Parent root;
+                try{
+                    root = FXMLLoader.load(getClass().getResource("Transfer.fxml"));
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.setTitle("Transfer");
+                    stage.show();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }
