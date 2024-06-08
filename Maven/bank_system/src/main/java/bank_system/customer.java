@@ -20,7 +20,7 @@ public class customer {
                     + "loginTimeout=30;";
 
 
-    public static void SignIn(ActionEvent event, String fName, String lName,String age, String email, String password, String gender, String tellNo){
+    public static void SignIn(ActionEvent event, String fName, String lName,String age, String email, String password, String gender, String tellNo, String account_type){
 
         PreparedStatement pCheckUser = null;
         PreparedStatement pInsert = null;
@@ -50,7 +50,7 @@ public class customer {
                 pInsert.setString(7, password);
                 int account_no = 123474345; // Don't forget to make this random and unique so the database will accept it
                 pInsert.setInt(8, account_no);
-                pInsert.setString(9,"Checking");
+                pInsert.setString(9,account_type);
 
                 tInsert = connection.prepareStatement("Insert into AccountBalance values (?, ?)");
                 tInsert.setInt(1, account_no);
