@@ -3,6 +3,7 @@ package bank_system;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
 
+import bank_system.supabase.GoTrue;
 import bank_system.supabase.PostgrestClient;
 import bank_system.supabase.SupabaseClient;
 import javafx.event.ActionEvent;
@@ -52,6 +53,13 @@ public class Customer_server{
                 newCustomer.put("email", email);
                 newCustomer.put("tell_no", tellNo);
                 insertResponse = postgrestClient.insert(newCustomer).exec();
+                
+                // This is not the correct place to authorize the user. Fix this
+
+                // Authorization 
+                // GoTrue auth = supabase.auth;
+                // auth.signUp(email, password);
+
 
                 Utils.ChangeScene(event, "Created Account", "LoggedIn.fxml", email);
             }
