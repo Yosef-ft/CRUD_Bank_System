@@ -52,7 +52,7 @@ public class SignInController implements Initializable {
         create_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){
-                customer.SignIn(event, FName_lineEdit.getText(), lName_lineEdit.getText(), age_lineEdit.getText(),email_lineEdit.getText(), pass_lineEdit.getText(), gender_comboBox.getValue(),telNo_lineEdit.getText(), accountType_combobox.getValue());
+                Customer_server.SignIn(event, FName_lineEdit.getText(), lName_lineEdit.getText(), age_lineEdit.getText(),email_lineEdit.getText(), pass_lineEdit.getText(), gender_comboBox.getValue(),telNo_lineEdit.getText(), accountType_combobox.getValue());
             }
         });
 

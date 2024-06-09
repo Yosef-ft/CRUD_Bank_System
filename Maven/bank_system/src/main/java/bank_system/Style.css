@@ -1,6 +1,7 @@
 .menuItem:hover{
     -fx-border-color: BLUE;
     -fx-border-width: 0px 0px 3px 0px;
+    -fx-cursor: hand;
 }
 
 .sidebarItem:hover{
