@@ -152,7 +152,7 @@ public class customer {
 
             if (!resultSet.isBeforeFirst()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Envalid Email address please try again");
+                alert.setContentText("Invalid Email address please try again");
                 alert.show();
             }else{
                 int account_no; 
