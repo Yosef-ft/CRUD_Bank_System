@@ -128,6 +128,40 @@ public class Customer_server {
     }
 
     public static String Account_no_retriver(String email) {
-        return "";
+
+        SupabaseClient supabase = new SupabaseClient(API.supabaseUrl, API.supabaseKey);
+        PostgrestClient postgrestClient = supabase.from("customer");
+
+        String Account_no = null; // change the account number to string; makes it easier for transaction class
+
+        try{
+            JSONObject response = postgrestClient
+                    .select("*")
+                    .eq("email", email)
+                    .exec();
+
+            JSONArray data_Array = (JSONArray) response.get("data");
+
+            // This check weather email already exists or not
+            if (data_Array.size() == 0) {
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Invalid Email address please try again");
+                alert.show();
+
+            }else{
+
+                JSONArray data_Array2 = (JSONArray) response.get("data");
+                JSONObject data_Object = (JSONObject) data_Array2.get(0);
+                Account_no = (String) data_Object.get("account_no");
+                
+            }
+        }catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Please check your connection and try again!");
+            alert.show();
+        }
+
+        return Account_no;
     }
 }
