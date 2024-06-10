@@ -3,7 +3,6 @@ package bank_system;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.google.gson.JsonObject;
 
 import bank_system.supabase.GoTrue;
 import bank_system.supabase.PostgrestClient;
@@ -18,7 +17,7 @@ public class Customer_server {
         PostgrestClient postgrestClient = supabase.from("customer");
         try {
             JSONObject response = postgrestClient
-                    .select("email")
+                    .select("*")
                     .eq("email", email)
                     .exec();
 
@@ -45,16 +44,33 @@ public class Customer_server {
                 newCustomer.put("tell_no", tellNo);
 
                 insertResponse = postgrestClient.insert(newCustomer).exec();
-
                 
                 JSONObject error_object = (JSONObject) insertResponse.get("error");
                 if (error_object == null) {
+
+                    JSONArray data_Array2 = (JSONArray) insertResponse.get("data");
+                    JSONObject data_Object = (JSONObject) data_Array2.get(0);
+                    Long Account_no = (Long) data_Object.get("account_no");
+                    int account_num = Math.toIntExact(Account_no);                    
+                                        
+                    try{         
+                    PostgrestClient postgrestClient2 = supabase.from("accountbalance");
+
+                    JSONObject insertAccount = null;
+                    JSONObject newAccount = new JSONObject();
+                    newAccount.put("account_no", account_num);
+                    newAccount.put("balance", 0.0);
+
+                    insertAccount = postgrestClient2.insert(newAccount).exec();
                     
+                }catch(Exception ex){
+                    System.out.println("Account balance error");
+                }
                     // Authorization
                     GoTrue auth = supabase.auth;
                     auth.signUp(email, password);
 
-                    Utils.ChangeScene(event, "Created Account", "MainWindow.fxml", email);
+                    Utils.ChangeScene(event, "Created Account", "LoggedIn.fxml", email);
                 } else {
 
                     String errorMessage = (String) error_object.get("message");
