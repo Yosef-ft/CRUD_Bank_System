@@ -33,7 +33,7 @@ public class MainWindowController implements Initializable {
         login_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){
-                customer.LogIn(event, email_lineEdit.getText(), password_lineEdit.getText());
+                Customer_server.LogIn(event, email_lineEdit.getText(), password_lineEdit.getText());
             }
         });
 

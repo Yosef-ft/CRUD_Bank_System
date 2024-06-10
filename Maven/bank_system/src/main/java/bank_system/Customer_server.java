@@ -54,7 +54,7 @@ public class Customer_server {
                     GoTrue auth = supabase.auth;
                     auth.signUp(email, password);
 
-                    Utils.ChangeScene(event, "Created Account", "LoggedIn.fxml", email);
+                    Utils.ChangeScene(event, "Created Account", "MainWindow.fxml", email);
                 } else {
 
                     String errorMessage = (String) error_object.get("message");
@@ -89,6 +89,42 @@ public class Customer_server {
 
     public static void LogIn(ActionEvent event, String email, String password) {
 
+        SupabaseClient supabase = new SupabaseClient(API.supabaseUrl, API.supabaseKey);
+        PostgrestClient postgrestClient = supabase.from("customer");
+
+        try{
+            JSONObject response = postgrestClient
+                    .select("*")
+                    .eq("email", email)
+                    .exec();
+
+            JSONArray data_Array = (JSONArray) response.get("data");
+
+            // This check weather email already exists or not
+            if (data_Array.size() == 0) {
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Invalid credentials please try again");
+                alert.show();
+
+            }else{
+
+                JSONArray data_Array2 = (JSONArray) response.get("data");
+                JSONObject data_Object = (JSONObject) data_Array2.get(0);
+                String retrived_password = (String) data_Object.get("password");
+                if(retrived_password.equals(password)){
+                    Utils.ChangeScene(event, "Logged in" ,"LoggedIn.fxml", email);
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Incorrect password. Please try again.");
+                    alert.show();
+                }
+            }
+        }catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Please check your connection and try again!");
+            alert.show();
+        }
     }
 
     public static String Account_no_retriver(String email) {
