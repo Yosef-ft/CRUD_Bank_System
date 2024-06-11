@@ -8,8 +8,15 @@ import org.json.simple.JSONObject;
 import bank_system.supabase.PostgrestClient;
 import bank_system.supabase.SupabaseClient;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 
 public class Transaction_server {
+
+    static SupabaseClient supabase = new SupabaseClient(API.supabaseUrl, API.supabaseKey);
+    static PostgrestClient postgrestClient = supabase.from("accountbalance");
+    static PostgrestClient postgrestClient_Transaction = supabase.from("transactions");
 
     static DepositController depositController;
     static WithdrawController withdrawController;
@@ -32,8 +39,6 @@ public class Transaction_server {
         Long balance;
         String account_num = String.valueOf(account_no);
 
-        SupabaseClient supabase = new SupabaseClient(API.supabaseUrl, API.supabaseKey);
-        PostgrestClient postgrestClient = supabase.from("accountbalance");
 
         try{
             JSONObject response = postgrestClient
@@ -45,24 +50,93 @@ public class Transaction_server {
             JSONObject data_Object = (JSONObject) data_Array.get(0);
             balance = (Long) data_Object.get("balance");
             float Balance = balance.floatValue();
-            System.out.println("Balance: " + Balance);
             return Balance;
             
             }catch(Exception e){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setContentText("Please check your connection and try again!");
-                alert.show();    
-                System.out.println("Balance error");   
+                alert.show();     
                 return 0.0f;         
         }
     }
 
     static void registerDepositTransaction(int account_no, float amount) {
+        JSONObject insertResponse = null;
+        try{
+        JSONObject newTransaction = new JSONObject();
+        newTransaction.put("sender_account_no", account_no);
+        newTransaction.put("amount", amount);
 
+        insertResponse = postgrestClient_Transaction.insert(newTransaction).exec();
+        }catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Please check your connection and try again!");
+            alert.show(); 
+        }
     }
 
-    public static void deposit(String account_nun, String deposit_amount) {
+    public static void deposit(String account_num, String deposit_amount) {
+        Alert alert;
+        float amount = 0;
+        float balance_before_deposit;
+        float balance_after_deposit;
+        int account_no = Integer.parseInt(account_num);
+        System.out.println(account_num);
 
+        try {
+            balance_before_deposit = Transaction_server.checkBalance(account_no);
+            System.out.println("Before first: " + balance_before_deposit);
+        } catch (Exception e) {
+            System.out.println("Error before balance");
+            balance_before_deposit =  0;
+            e.printStackTrace();
+        }
+
+        if (InputValidator.isFloat(deposit_amount) || deposit_amount == "") {
+            amount = Float.parseFloat(deposit_amount);
+            
+            float new_balance = balance_before_deposit + amount;
+            System.out.println(new_balance);
+
+
+            try{
+                JSONObject newCustomer = new JSONObject();
+                newCustomer.put("account_no", account_no);
+                newCustomer.put("balance", new_balance);
+                JSONObject response = postgrestClient
+                    .update(newCustomer)
+                    .eq("account_no", account_num)
+                    // .order("created_at")
+                    // .limit(10)
+                    .exec();
+                    System.out.println(response);
+                    System.out.println("Transaction insert: " + response);
+                balance_after_deposit = Transaction_server.checkBalance(account_no);
+                System.out.println("before: " + balance_before_deposit);
+
+                // showinhg the befor and after balances
+                alert = new Alert(AlertType.INFORMATION);
+                alert.setContentText("balance before deposit =" + balance_before_deposit + "\n" +
+                        "balance after deposit =" + balance_after_deposit);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Succesfully Deposited");
+
+                Transaction_server.registerDepositTransaction(account_no, amount);
+                alert.getButtonTypes().setAll(ButtonType.OK);
+                Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                okButton.setOnAction(e -> {
+                    // Perform your action here
+                    Transaction_server.depositController.cancelDepo_button.fire();
+                });
+                alert.showAndWait();
+                
+            }catch(Exception e){
+                alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Please check your connection and try again!");
+                alert.show(); 
+            }
+
+            }
     }
 
     

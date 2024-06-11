@@ -26,12 +26,14 @@ public class DepositController implements Initializable {
     private TextField amount_lineEdit;
     
     String Email = Utils.Email;
-    String account_no = customer.Account_no_retriver(Email);
+    String account_no = Customer_server.Account_no_retriver(Email);
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
 
         Transactions.depositController = this;
+        Transaction_server.depositController = this;
+
 
         cancelDepo_button.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -44,7 +46,7 @@ public class DepositController implements Initializable {
         depositDB_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){
-                Transactions.deposit(account_no, amount_lineEdit.getText());
+                Transaction_server.deposit(account_no, amount_lineEdit.getText());
             }
         });
 
