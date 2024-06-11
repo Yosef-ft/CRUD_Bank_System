@@ -206,7 +206,7 @@ public class Transaction_server {
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText("Succesfully withdrawal!");
 
-                Transaction_server.registerDepositTransaction(account_no, amount);
+                Transaction_server.registerWithdrawTransaction(account_no, amount);
                 alert.getButtonTypes().setAll(ButtonType.OK);
                 Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
                 okButton.setOnAction(e -> {
