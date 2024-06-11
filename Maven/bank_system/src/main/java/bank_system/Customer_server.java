@@ -169,7 +169,8 @@ public class Customer_server {
 
                 JSONArray data_Array2 = (JSONArray) response.get("data");
                 JSONObject data_Object = (JSONObject) data_Array2.get(0);
-                Account_no = (String) data_Object.get("account_no");
+                Long account_no = (Long) data_Object.get("account_no");
+                Account_no = String.valueOf(account_no);
                 
             }
         }catch(Exception e){

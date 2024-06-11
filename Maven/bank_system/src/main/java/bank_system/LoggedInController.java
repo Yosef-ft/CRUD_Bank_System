@@ -92,7 +92,7 @@ public class LoggedInController implements Initializable {
     private Button withdraw_button;
 
     public static String Email = Utils.Email;
-    String account_no = customer.Account_no_retriver(Email);
+    String account_no = Customer_server.Account_no_retriver(Email);
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
@@ -190,7 +190,7 @@ public class LoggedInController implements Initializable {
             public void handle(ActionEvent event){
                 
                 try {
-                    float balance = Transactions.checkBalance(Integer.valueOf(account_no));
+                    float balance = Transaction_server.checkBalance(Integer.valueOf(account_no));
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setContentText("Your balance is " + balance);
                     alert.setHeaderText("Balance");
