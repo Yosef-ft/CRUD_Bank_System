@@ -81,13 +81,10 @@ public class Transaction_server {
         float balance_before_deposit;
         float balance_after_deposit;
         int account_no = Integer.parseInt(account_num);
-        System.out.println(account_num);
 
         try {
             balance_before_deposit = Transaction_server.checkBalance(account_no);
-            System.out.println("Before first: " + balance_before_deposit);
         } catch (Exception e) {
-            System.out.println("Error before balance");
             balance_before_deposit =  0;
             e.printStackTrace();
         }
@@ -100,14 +97,12 @@ public class Transaction_server {
 
 
             try{
-                JSONObject newCustomer = new JSONObject();
-                newCustomer.put("account_no", account_no);
-                newCustomer.put("balance", new_balance);
+                JSONObject newTransaction = new JSONObject();
+                newTransaction.put("account_no", account_no);
+                newTransaction.put("balance", new_balance);
                 JSONObject response = postgrestClient
-                    .update(newCustomer)
+                    .update(newTransaction)
                     .eq("account_no", account_num)
-                    // .order("created_at")
-                    // .limit(10)
                     .exec();
                     System.out.println(response);
                     System.out.println("Transaction insert: " + response);
@@ -141,10 +136,92 @@ public class Transaction_server {
 
     
     static void registerWithdrawTransaction(int account_no, float amount) {
+        amount *= -1;
+        JSONObject insertResponse = null;
+        try{
+        JSONObject newTransaction = new JSONObject();
+        newTransaction.put("sender_account_no", account_no);
+        newTransaction.put("amount", amount);
 
+        insertResponse = postgrestClient_Transaction.insert(newTransaction).exec();
+        }catch(Exception e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Please check your connection and try again!");
+            alert.show(); 
+        }
     }
 
     static void withdraw(String account_num, String withdrawal_amoount) {
+
+        float amount = 0, balance_before_withdraw = 0;
+        float balance_after_withdraw = 0;
+        int account_no = Integer.parseInt(account_num);
+        Alert alert;
+
+        try {
+            balance_before_withdraw = Transaction_server.checkBalance(account_no);
+        } catch (Exception e) {
+            balance_before_withdraw =  0;
+            e.printStackTrace();
+        }
+
+        if (InputValidator.isFloat(withdrawal_amoount) || withdrawal_amoount == "") {
+            amount = Float.parseFloat(withdrawal_amoount);
+        }
+
+        if (amount > balance_before_withdraw) {
+            alert = new Alert(AlertType.ERROR);
+            alert.setContentText("Please try Again with a smaller amount");
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Insufficient balance!");
+            alert.showAndWait();
+        } else if (amount > Transactions.max_withdraw_amaount) {
+            alert = new Alert(AlertType.ERROR);
+            alert.setContentText("The amount is beyond the limit, Try Again");
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("null");
+            alert.showAndWait();
+        } else {
+            float new_balance = balance_before_withdraw - amount;
+            System.out.println(new_balance);
+
+
+            try{
+                JSONObject newTransaction = new JSONObject();
+                newTransaction.put("account_no", account_no);
+                newTransaction.put("balance", new_balance);
+                JSONObject response = postgrestClient
+                    .update(newTransaction)
+                    .eq("account_no", account_num)
+                    .exec();
+                    System.out.println(response);
+                    System.out.println("Transaction insert: " + response);
+                    balance_after_withdraw = Transaction_server.checkBalance(account_no);
+                System.out.println("before: " + balance_before_withdraw);
+
+                // showinhg the befor and after balances
+                alert = new Alert(AlertType.INFORMATION);
+                alert.setContentText("balance before withdraw =" + balance_before_withdraw + "\n" +
+                        "balance after withdraw =" + balance_after_withdraw);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Succesfully withdrawal!");
+
+                Transaction_server.registerDepositTransaction(account_no, amount);
+                alert.getButtonTypes().setAll(ButtonType.OK);
+                Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                okButton.setOnAction(e -> {
+                    // Perform your action here
+                    Transaction_server.withdrawController.cancelWith_button.fire();
+                });
+                alert.showAndWait();
+                
+            }catch(Exception e){
+                alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Please check your connection and try again!");
+                alert.show(); 
+            }
+
+        }
 
     }
 
