@@ -203,6 +203,13 @@ public class LoggedInController implements Initializable {
             }
         });
 
+        logout_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                Utils.ChangeScene(event, "Main window", "MainWindow.fxml", null);
+            }
+        });
+
         transfer_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){
