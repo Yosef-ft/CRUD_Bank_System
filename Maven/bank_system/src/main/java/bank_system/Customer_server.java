@@ -1,5 +1,7 @@
 package bank_system;
 
+import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -180,5 +182,58 @@ public class Customer_server {
         }
 
         return Account_no;
+    }
+
+    public static ArrayList<Integer> gender_counter(){
+        ArrayList<Integer> maleFemale = new ArrayList<>();
+        SupabaseClient supabase = new SupabaseClient(API.supabaseUrl, API.supabaseKey);
+        PostgrestClient postgrestClient5 = supabase.from("customer");
+        JSONObject response2 = postgrestClient5
+            .select("gender")
+            .exec();
+        
+        JSONArray gender = (JSONArray) response2.get("data");
+        int male= 0;
+        int female = 0;
+        for (int i = 0; i< gender.size(); i++){
+            JSONObject counter = (JSONObject) gender.get(i);
+            String value = (String) counter.get("gender");
+            try{
+                if (value.equals("Male")) male++;
+                else female++;
+            }catch(NullPointerException e){
+                
+            }
+        }
+        maleFemale.add(male);
+        maleFemale.add(female);
+
+        return maleFemale;
+    }
+
+    public static ArrayList<Integer> AccType_counter(){
+        ArrayList<Integer> type = new ArrayList<>();
+        SupabaseClient supabase = new SupabaseClient(API.supabaseUrl, API.supabaseKey);
+        PostgrestClient postgrestClient5 = supabase.from("customer");
+        JSONObject response2 = postgrestClient5
+            .select("account_type")
+            .exec();
+        
+        JSONArray gender = (JSONArray) response2.get("data");
+        int checking= 0;
+        int saving = 0;
+        int business = 0;
+        for (int i = 0; i< gender.size(); i++){
+            JSONObject counter = (JSONObject) gender.get(i);
+            String value = (String) counter.get("account_type");
+            if (value.equals("Checking Account")) checking++;
+            else if (value.equals("Savings Account")) saving++;
+            else business++;
+        }
+        type.add(checking);
+        type.add(saving);
+        type.add(business);
+
+        return type;
     }
 }

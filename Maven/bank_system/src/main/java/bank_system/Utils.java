@@ -54,7 +54,7 @@ public class Utils extends Application{
     @Override
     public void start(Stage PrimaryStage){
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Admin.fxml"));
             Scene scene = new Scene(root);
 
             PrimaryStage.setScene(scene);

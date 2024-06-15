@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="579.0" prefWidth="683.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank_system.AdminController">
+   <children>
+      <PieChart fx:id="aType_pieChart" layoutX="47.0" layoutY="72.0" prefHeight="202.0" prefWidth="273.0" />
+      <PieChart fx:id="gender_pieChart" layoutX="387.0" layoutY="72.0" prefHeight="202.0" prefWidth="273.0" />
+      <Label layoutX="111.0" layoutY="54.0" text="Account Type" />
+      <Label layoutX="514.0" layoutY="54.0" text="Gender" />
+      <AnchorPane layoutX="123.0" layoutY="555.0" prefHeight="19.0" prefWidth="271.0" style="-fx-background-color: B3D9FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <AnchorPane layoutX="190.0" layoutY="14.0" prefHeight="19.0" prefWidth="271.0" style="-fx-background-color: B3D9FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="home_button" mnemonicParsing="false" prefHeight="30.0" prefWidth="107.0" style="-fx-background-color: White;" styleClass="menuItem" text="Home" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="576.0" AnchorPane.topAnchor="0.0">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Resources/icons8-home-50.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <LineChart fx:id="transactions_lineChart" layoutX="20.0" layoutY="280.0" prefHeight="279.0" prefWidth="656.0">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </LineChart>
+   </children>
+</AnchorPane>
