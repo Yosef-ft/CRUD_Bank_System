@@ -26,12 +26,13 @@ public class WithdrawController implements Initializable {
     private Button home_button2;
 
     String Email = Utils.Email;
-    String account_no = customer.Account_no_retriver(Email);
+    String account_no = Customer_server.Account_no_retriver(Email);
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
 
         Transactions.withdrawController = this;
+        Transaction_server.withdrawController = this;
 
         cancelWith_button.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -44,7 +45,7 @@ public class WithdrawController implements Initializable {
         WithdrawDB_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){
-                Transactions.withdraw(account_no, amount_lineEdit.getText());
+                Transaction_server.withdraw(account_no, amount_lineEdit.getText());
             }
         });
 

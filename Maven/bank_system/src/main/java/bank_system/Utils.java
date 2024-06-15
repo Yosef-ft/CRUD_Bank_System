@@ -1,7 +1,11 @@
 package bank_system;
 
 import java.io.IOException;
+import org.json.simple.JSONObject;
 
+
+import bank_system.supabase.PostgrestClient;
+import bank_system.supabase.SupabaseClient;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +46,7 @@ public class Utils extends Application{
         }else{
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
-        stage.setScene(new Scene(root, 600, 400));
+        stage.setScene(new Scene(root, 600, 450));
         stage.show();
         }
     }
@@ -61,7 +65,8 @@ public class Utils extends Application{
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch(args);    
+            
     }
     
 }
