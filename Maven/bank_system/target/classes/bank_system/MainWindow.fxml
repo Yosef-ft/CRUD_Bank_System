@@ -49,7 +49,7 @@
             </Label>
             <TextField fx:id="email_lineEdit" layoutX="138.0" layoutY="199.0" promptText="Enter Email" />
             <TextField fx:id="password_lineEdit" layoutX="138.0" layoutY="239.0" promptText="Enter password" />
-            <Button fx:id="login_button" layoutX="149.0" layoutY="281.0" mnemonicParsing="false" prefHeight="5.0" prefWidth="81.0" style="-fx-background-color: B3D9FF; -fx-cursor: hand;" text="Login">
+            <Button fx:id="login_button" layoutX="149.0" layoutY="281.0" mnemonicParsing="false" prefHeight="5.0" prefWidth="81.0" style="-fx-background-color: B3D9FF; -fx-cursor: hand; -fx-border-radius: 100px;" text="Login">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
