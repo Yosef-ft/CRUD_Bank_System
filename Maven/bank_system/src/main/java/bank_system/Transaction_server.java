@@ -10,6 +10,8 @@ import org.json.simple.JSONObject;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import javafx.scene.control.ButtonType;
 
@@ -504,7 +506,7 @@ public class Transaction_server {
                     JSONObject withdrow = new JSONObject();
                     withdrow.put("transaction_date" , Dtime);
                     withdrow.put("sender_account_no" , account_no);
-                    withdrow.put("amount", amount);
+                    withdrow.put("amount",( amount * -1));
                     withdrow.put("transaction_id", transaction_id);  
                     withdrow.put("Type", "Negative");
                     withArray.add(withdrow);
@@ -583,13 +585,29 @@ public class Transaction_server {
         }
 
         mergedArray.sort(Comparator.comparingLong(o -> (Long) ((JSONObject) o).get("transaction_id")).reversed());
-            // System.out.println("Merged array: " + mergedArray);
         
         return mergedArray;
 
-        // return "";
     }
     
+    public static ArrayList<Integer> Transaction_counter(){
+        ArrayList<Integer> transList = new ArrayList<>();
+        PostgrestClient postgrestClient5 = supabase.from("transactions");
+        JSONObject response2 = postgrestClient5
+            .select("amount")
+            .exec();
+        
+        JSONArray gender = (JSONArray) response2.get("data");
+
+        for (int i = 0; i< gender.size(); i++){
+            JSONObject counter = (JSONObject) gender.get(i);
+            Long values = (Long) counter.get("amount");
+            int value = values.intValue();
+            transList.add(value);
+        }
+
+        return transList;
+    }
 
 }
 
