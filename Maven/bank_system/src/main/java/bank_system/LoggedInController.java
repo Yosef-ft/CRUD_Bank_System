@@ -2,6 +2,8 @@ package bank_system;
 
 import java.util.ResourceBundle;
 
+import org.apache.commons.codec.EncoderException;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -150,6 +152,23 @@ public class LoggedInController implements Initializable {
                 Utils.ChangeScene(event, "Chapa live payment", "linkOpener.fxml", Email);                
             }
         });
+
+        recent_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("RecentTransaction.fxml"));
+                    Scene scene = new Scene(root);
+    
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }                
+            }
+        }); 
 
         deposite_button.setOnAction(new EventHandler<ActionEvent>(){
             @Override

@@ -1,15 +1,16 @@
 package bank_system;
 
-import java.sql.SQLException;
+import bank_system.supabase.PostgrestClient;
+import bank_system.supabase.SupabaseClient;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import bank_system.supabase.PostgrestClient;
-import bank_system.supabase.SupabaseClient;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import java.util.Comparator;
 import javafx.scene.control.ButtonType;
 
 public class Transaction_server {
@@ -458,5 +459,137 @@ public class Transaction_server {
         }
 
     }
+               
+    JSONArray depoArray = new JSONArray();
+    JSONArray withArray = new JSONArray();
+    JSONArray mergedArray = new JSONArray();
+    
+    public JSONArray Merged_array(){
+        return mergedArray;
+    }
+
+    public  void Depo_With(String account_num){
+        PostgrestClient postgrestClient3 = supabase.from("transactions");
+
+        JSONObject response = postgrestClient3
+        .select("*")
+        .eq("sender_account_no" , String.valueOf(account_num))
+        .is("receiver_account_no", null)
+        .exec();
+        //    System.out.println(response);
+        
+        JSONArray data_array = (JSONArray) response.get("data");
+        System.out.println(data_array.size());
+
+    
+        for (int i = 0; i< data_array.size(); i++){
+            
+            JSONObject data_Object = (JSONObject) data_array.get(i);
+            String  Dtime = (String) data_Object.get("transaction_date");
+            Long amount = (Long) data_Object.get("amount");
+            Long account_no = (Long) data_Object.get("sender_account_no");
+            Long transaction_id = (Long) data_Object.get("transaction_id");
+
+            if (amount > 0) {
+                JSONObject Deposit = new JSONObject();
+                Deposit.put("transaction_date" , Dtime);
+                Deposit.put("sender_account_no" , account_no);
+                Deposit.put("amount", amount);
+                Deposit.put("transaction_id", transaction_id);
+                Deposit.put("Type", "Positive");
+        
+                depoArray.add(Deposit);
+                
+                }else{
+                    JSONObject withdrow = new JSONObject();
+                    withdrow.put("transaction_date" , Dtime);
+                    withdrow.put("sender_account_no" , account_no);
+                    withdrow.put("amount", amount);
+                    withdrow.put("transaction_id", transaction_id);  
+                    withdrow.put("Type", "Negative");
+                    withArray.add(withdrow);
                 }
+                        
+        }
+        // return "";
+    }
+
+    public  void Transfer_Withdraw(String account_num){
+        PostgrestClient postgrestClient4 = supabase.from("transactions");
+
+        JSONObject response2 = postgrestClient4
+        .select("*")
+        .eq("sender_account_no" , String.valueOf(account_num))
+        .not("receiver_account_no", "is" , null)
+        .exec();
+        
+        JSONArray data_array2 = (JSONArray) response2.get("data");
+        for (int i = 0; i< data_array2.size(); i++){
+
+            JSONObject data_Object = (JSONObject) data_array2.get(i);
+            String  Dtime = (String) data_Object.get("transaction_date");
+            Long amount = (Long) data_Object.get("amount");
+            Long account_no = (Long) data_Object.get("sender_account_no");
+            Long transaction_id = (Long) data_Object.get("transaction_id");      
+            
+            JSONObject withdrow = new JSONObject();
+            withdrow.put("transaction_date" , Dtime);
+            withdrow.put("sender_account_no" , account_no);
+            withdrow.put("amount", amount);
+            withdrow.put("transaction_id", transaction_id);
+            withdrow.put("Type", "Negative");
+            withArray.add(withdrow);                
+        }
+        // return "";
+    }
+    
+    public  void Transfer_Depo(String account_num){
+        PostgrestClient postgrestClient5 = supabase.from("transactions");
+        JSONObject response3 = postgrestClient5
+        .select("*")
+        .eq("receiver_account_no" , account_num)
+        .not("sender_account_no", "is" , null)
+        .exec();
+        
+        JSONArray data_array3 = (JSONArray) response3.get("data");
+        for (int i = 0; i< data_array3.size(); i++){
+                
+            JSONObject data_Object = (JSONObject) data_array3.get(i);
+            String  Dtime = (String) data_Object.get("transaction_date");
+            Long amount = (Long) data_Object.get("amount");
+            Long account_no = (Long) data_Object.get("sender_account_no");
+            Long transaction_id = (Long) data_Object.get("transaction_id");      
+
+            JSONObject Deposit = new JSONObject();
+            Deposit.put("transaction_date" , Dtime);
+            Deposit.put("sender_account_no" , account_no);
+            Deposit.put("amount", amount);
+            Deposit.put("transaction_id", transaction_id);    
+            Deposit.put("Type", "Positive");   
+            depoArray.add(Deposit);    
+        }   
+        // return "";    
+    }
+
+    public  JSONArray merge_array(){
+        for (int i =0; i< depoArray.size(); i++){
+            JSONObject data_Object = (JSONObject) depoArray.get(i);
+            mergedArray.add(data_Object);
+        }
+
+        for (int i =0; i<withArray.size(); i++){
+            JSONObject data_Object = (JSONObject) withArray.get(i);
+            mergedArray.add(data_Object);
+        }
+
+        mergedArray.sort(Comparator.comparingLong(o -> (Long) ((JSONObject) o).get("transaction_id")).reversed());
+            // System.out.println("Merged array: " + mergedArray);
+        
+        return mergedArray;
+
+        // return "";
+    }
+    
+
+}
 

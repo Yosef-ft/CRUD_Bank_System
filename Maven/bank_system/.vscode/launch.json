@@ -6,12 +6,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "RecentTransactionController",
+            "request": "launch",
+            "mainClass": "bank_system.RecentTransactionController",
+            "projectName": "bank_system"
+        },
+        {
+            "type": "java",
             "name": "Utils",
             "request": "launch",
             "mainClass": "bank_system.Utils",
             "projectName": "bank_system",
             "vmArgs": "--module-path \"C:\\Java\\javafx-sdk-17.0.11\\lib\" --add-modules javafx.web,javafx.fxml"
-            
         },
         {
             "type": "java",
