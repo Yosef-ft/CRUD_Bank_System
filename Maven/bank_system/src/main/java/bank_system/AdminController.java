@@ -48,7 +48,7 @@ public class AdminController implements Initializable{
 
         
         ((CategoryAxis) transactions_lineChart.getXAxis()).setLabel("TimeStamp");
-        ((NumberAxis) transactions_lineChart.getYAxis()).setLabel("Transactions");
+        ((NumberAxis) transactions_lineChart.getYAxis()).setLabel("Total Capital");
 
         transactions_lineChart.setTitle("Total transactions");
 

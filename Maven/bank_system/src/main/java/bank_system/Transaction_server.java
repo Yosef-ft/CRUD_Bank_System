@@ -597,10 +597,10 @@ public class Transaction_server {
             .select("amount")
             .exec();
         
-        JSONArray gender = (JSONArray) response2.get("data");
+        JSONArray tract = (JSONArray) response2.get("data");
 
-        for (int i = 0; i< gender.size(); i++){
-            JSONObject counter = (JSONObject) gender.get(i);
+        for (int i = 0; i< tract.size(); i++){
+            JSONObject counter = (JSONObject) tract.get(i);
             Long values = (Long) counter.get("amount");
             int value = values.intValue();
             transList.add(value);
