@@ -187,7 +187,6 @@ public class Transaction_server {
             amount = Float.parseFloat(deposit_amount);
             
             float new_balance = balance_before_deposit + amount;
-            System.out.println(new_balance);
 
 
             try{
@@ -198,10 +197,10 @@ public class Transaction_server {
                     .update(newTransaction)
                     .eq("account_no", account_num)
                     .exec();
-                    System.out.println(response);
-                    System.out.println("Transaction insert: " + response);
+                    // System.out.println(response);
+                    // System.out.println("Transaction insert: " + response);
                 balance_after_deposit = Transaction_server.checkBalance(account_no);
-                System.out.println("before: " + balance_before_deposit);
+                // System.out.println("before: " + balance_before_deposit);
 
                 // showinhg the befor and after balances
                 alert = new Alert(AlertType.INFORMATION);
@@ -383,8 +382,8 @@ public class Transaction_server {
                         System.out.println("Response" + response);
                         try  {
                             check = data_Array.size() > 0;
-                            System.out.println("r_account " + r_account);
-                            System.out.println("boolean: " + check);
+                            // System.out.println("r_account " + r_account);
+                            // System.out.println("boolean: " + check);
 
                             // check where the entered account esist in db or not
                             // if(check) System.out.println("true");

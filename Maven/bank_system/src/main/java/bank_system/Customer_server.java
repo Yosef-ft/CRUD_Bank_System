@@ -35,6 +35,9 @@ public class Customer_server {
             } else {
                 JSONObject insertResponse = null;
 
+                GoTrue auth = supabase.auth;
+                auth.signUp(email, password);
+
                 JSONObject newCustomer = new JSONObject();
                 newCustomer.put("password", password);
                 newCustomer.put("account_type", account_type);
@@ -69,8 +72,8 @@ public class Customer_server {
                     System.out.println("Account balance error");
                 }
                     // Authorization
-                    GoTrue auth = supabase.auth;
-                    auth.signUp(email, password);
+                    // GoTrue auth = supabase.auth;
+                    // auth.signUp(email, password);
 
                     Utils.ChangeScene(event, "Created Account", "LoggedIn.fxml", email);
                 } else {

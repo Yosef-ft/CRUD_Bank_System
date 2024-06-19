@@ -37,6 +37,13 @@ public class MainWindowController implements Initializable {
             }
         });
 
+        admin_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                Utils.ChangeScene(event, "Adminstrator", "Admin.fxml", null);
+            }
+        });
+
         sign_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){

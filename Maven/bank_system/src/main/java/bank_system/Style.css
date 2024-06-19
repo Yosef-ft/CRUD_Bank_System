@@ -6,7 +6,6 @@
 
 .sidebarItem:hover{
     -fx-background-color: #145886;
-    -fx-boarder-color: WHITE;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
 }

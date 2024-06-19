@@ -2,6 +2,8 @@ package bank_system;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
@@ -14,6 +16,8 @@ import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javax.swing.Action;
 
 public class AdminController implements Initializable{
 
@@ -65,6 +69,13 @@ public class AdminController implements Initializable{
         }
 
         transactions_lineChart.getData().add(data);
+
+        home_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event){
+                Utils.ChangeScene(event, "Walia Bank", "MainWindow.fxml", null);
+            }
+        });
     }
 
 }
