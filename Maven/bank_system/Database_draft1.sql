@@ -54,7 +54,7 @@ create table Adimstrator(
     password varchar(50),
 );
 
--- UPGRADED DATABASE FOR POSTGRES
+-- UPGRADED DATABASE FOR POSTGRES ----- Supabase
 
 -- create database Bank;
 
