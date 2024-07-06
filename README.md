@@ -1,5 +1,7 @@
 ### Getting started
 - Clone the repository then create a database in supabase using the `sql` file and using your API key create an API.java file and store it there.
+- The folder `Bank_system` uses a database locally using sql server.
+- the folder `Maven/Bank_system` uses supabase.
 - It is integrated with Chapa(an ethipian digital payment system)
 
 - This is a simple bank system that allows you to `send`, `receive`, `Deposit` and `withdrow` money.
